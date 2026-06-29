@@ -1,0 +1,49 @@
+# transfemme-tailoring
+
+> A first-person build log and interactive alteration calculators for refitting
+> oversized, masculine-cut formalwear into a well-fitted transfeminine silhouette.
+> Start with `README.md` (the source-of-record) and `AGENTS.md` (the agent contract).
+
+## Canonical
+
+- [Agent contract](https://github.com/jesssullivan/transfemme-tailoring/blob/main/AGENTS.md)
+- [Claude contract](https://github.com/jesssullivan/transfemme-tailoring/blob/main/CLAUDE.md)
+- [README](https://github.com/jesssullivan/transfemme-tailoring/blob/main/README.md)
+- [Repo manifest](https://github.com/jesssullivan/transfemme-tailoring/blob/main/tinyland.repo.json)
+- [Repo manifest schema](https://github.com/jesssullivan/transfemme-tailoring/blob/main/docs/schemas/tinyland-repo-manifest.schema.json)
+- [Agent adoption flow](https://github.com/jesssullivan/transfemme-tailoring/blob/main/docs/agent-adoption.md)
+- [CI schema](https://github.com/jesssullivan/transfemme-tailoring/blob/main/docs/CI-SCHEMA.md)
+- [Repo taxonomy and GitOps convergence](https://github.com/jesssullivan/transfemme-tailoring/blob/main/docs/spec/tinyland-repo-taxonomy-and-gitops-contract-2026-05-19.md)
+- [Justfile](https://github.com/jesssullivan/transfemme-tailoring/blob/main/Justfile)
+- [Bazel wrapper](https://github.com/jesssullivan/transfemme-tailoring/blob/main/scripts/gloriousflywheel-bazel.sh)
+
+## Skills
+
+- [tinyland-flywheel-bazel](https://github.com/jesssullivan/transfemme-tailoring/blob/main/.agents/skills/tinyland-flywheel-bazel/SKILL.md): cache-first Bazel and GloriousFlywheel RBE wiring.
+- [tinyland-static-spoke](https://github.com/jesssullivan/transfemme-tailoring/blob/main/.agents/skills/tinyland-static-spoke/SKILL.md): static spoke site customization and projection rules.
+- [tinyland-repo-contract](https://github.com/jesssullivan/transfemme-tailoring/blob/main/.agents/skills/tinyland-repo-contract/SKILL.md): Just, Nix, gitleaks, validation, and no-ad-hoc-file contract.
+
+## Content
+
+- [Overview](https://jesssullivan.github.io/transfemme-tailoring/)
+- [Machine setup & the treadle restoration](https://jesssullivan.github.io/transfemme-tailoring/machine)
+- [Tools & BOM](https://jesssullivan.github.io/transfemme-tailoring/tools)
+- [Fitting theory & calculators](https://jesssullivan.github.io/transfemme-tailoring/fitting)
+- [Dress pants](https://jesssullivan.github.io/transfemme-tailoring/pants)
+- [Dress shirts](https://jesssullivan.github.io/transfemme-tailoring/shirts)
+- [Vests / waistcoats](https://jesssullivan.github.io/transfemme-tailoring/vests)
+- [Suit coats](https://jesssullivan.github.io/transfemme-tailoring/coats)
+
+## Agent Routes
+
+- [Agent AX map](https://jesssullivan.github.io/transfemme-tailoring/agent)
+- [Machine route map](https://jesssullivan.github.io/transfemme-tailoring/agent-map.md)
+- [Sitemap](https://jesssullivan.github.io/transfemme-tailoring/sitemap.xml)
+
+## Operating Constraints
+
+- Use `just <recipe>` for every repo operation.
+- Use `nix develop --command just <recipe>` in CI.
+- Keep Flywheel endpoints and credentials in environment-owned authority, never source.
+- Run gitleaks through Justfile recipes.
+- Keep static spokes static. Do not add runtime auth, database, payment, or broker-fetch behavior.
