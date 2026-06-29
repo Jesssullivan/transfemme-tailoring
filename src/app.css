@@ -337,3 +337,29 @@ pre.shiki span {
 		scroll-behavior: auto !important;
 	}
 }
+
+/* ===== Print: a clean "alteration card" — drop the chrome, keep the prose and
+   calculator cards so you can print the computed numbers and pin them to the
+   fabric during a live alteration. */
+@media print {
+	.saturn-nav,
+	footer,
+	[data-testid='brand-vectors-bg'] {
+		display: none !important;
+	}
+	body {
+		background: #fff !important;
+		color: #000 !important;
+	}
+	.card {
+		border: 1px solid #999 !important;
+		break-inside: avoid;
+	}
+	main {
+		max-width: none !important;
+	}
+	a {
+		color: #000 !important;
+		text-decoration: none;
+	}
+}

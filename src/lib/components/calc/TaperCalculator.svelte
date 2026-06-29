@@ -3,10 +3,10 @@
 	// cuff for a sleeve; fullest thigh/knee & hem for a leg) → the seam offsets
 	// to mark. Each seam removes 2× its offset, split over S seams. For an
 	// athletic build, set the upper target ≈ the upper current so the upper
-	// offset stays ~0: the slim look comes from the lower leg / wrist, never from
-	// strangling the quad or the flexed bicep. Blend back to the original seam
-	// above the upper point so the armscye / seat is never tightened.
-	import { cm } from '$lib/calc/format';
+	// offset stays ~0: the slim comes from the lower leg / wrist, never from
+	// strangling the quad or the flexed bicep.
+	import { round1, fmt } from '$lib/calc/format';
+	import { measurements } from '$lib/calc/measurements.svelte';
 
 	let upperCurrent = $state(40); // garment circ at the upper point (bicep / thigh)
 	let upperTarget = $state(40); // target finished circ at the upper point (body flexed + ease)
@@ -43,20 +43,20 @@
 
 	<div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Upper now (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={upperCurrent} />
+			<span class="text-surface-600 dark:text-surface-400">Upper now ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={upperCurrent} />
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Upper target (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={upperTarget} />
+			<span class="text-surface-600 dark:text-surface-400">Upper target ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={upperTarget} />
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Lower now (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={lowerCurrent} />
+			<span class="text-surface-600 dark:text-surface-400">Lower now ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={lowerCurrent} />
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Lower target (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={lowerTarget} />
+			<span class="text-surface-600 dark:text-surface-400">Lower target ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={lowerTarget} />
 		</label>
 	</div>
 
@@ -64,15 +64,17 @@
 		<caption class="sr-only">Taper offsets to mark</caption>
 		<tbody>
 			<tr class="border-t border-surface-300 dark:border-surface-700">
-				<td class="py-1 pr-3 font-mono whitespace-nowrap">{cm(o1)} cm</td>
+				<td class="py-1 pr-3 font-mono tabular-nums whitespace-nowrap">{fmt(o1, measurements.unit)}</td>
 				<td class="py-1">Offset to mark in at the <span class="font-medium">upper</span> point (each seam)</td>
 			</tr>
 			<tr class="border-t border-surface-300 dark:border-surface-700">
-				<td class="py-1 pr-3 font-mono whitespace-nowrap">{cm(o2)} cm</td>
+				<td class="py-1 pr-3 font-mono tabular-nums whitespace-nowrap">{fmt(o2, measurements.unit)}</td>
 				<td class="py-1">Offset to mark in at the <span class="font-medium">lower</span> point (each seam)</td>
 			</tr>
 			<tr class="border-t border-surface-300 dark:border-surface-700">
-				<td class="py-1 pr-3 font-mono whitespace-nowrap">{cm(R1)} / {cm(R2)} cm</td>
+				<td class="py-1 pr-3 font-mono tabular-nums whitespace-nowrap"
+					>{fmt(R1, measurements.unit)} / {fmt(R2, measurements.unit)}</td
+				>
 				<td class="py-1">Total reduction at the upper / lower point</td>
 			</tr>
 		</tbody>
@@ -85,11 +87,11 @@
 		</p>
 	{/if}
 	<p class="mt-2 text-xs text-surface-500">
-		Mark the new seam inset {cm(o1)} cm at the upper point, tapering to {cm(o2)} cm at the lower; above the upper point curve
-		smoothly back to the original seam over 4–8 cm. Legs: keep the offset 0 through seat and thigh, diverge only at/below
-		the knee. Sleeves: stop the taper above the flexed bicep, slim elbow-to-wrist only.
+		Mark the new seam inset {fmt(o1, measurements.unit)} at the upper point, tapering to {fmt(o2, measurements.unit)}
+		at the lower; above the upper point curve smoothly back to the original seam over 4–8 cm. Legs: keep the offset 0 through
+		seat and thigh, diverge only at/below the knee. Sleeves: stop the taper above the flexed bicep, slim elbow-to-wrist only.
 	</p>
 	<p class="sr-only" aria-live="polite">
-		{`Mark ${cm(o1)} centimetres in at the upper point and ${cm(o2)} at the lower, on each of ${nSeams} seam${nSeams > 1 ? 's' : ''}.`}
+		{`Mark ${round1(o1)} ${measurements.unit} in at the upper point and ${round1(o2)} at the lower, on each of ${nSeams} seam${nSeams > 1 ? 's' : ''}.`}
 	</p>
 </div>

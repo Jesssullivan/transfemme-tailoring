@@ -29,6 +29,7 @@
 - [Machine setup & the treadle restoration](https://jesssullivan.github.io/transfemme-tailoring/machine)
 - [Tools & BOM](https://jesssullivan.github.io/transfemme-tailoring/tools)
 - [Fitting theory & calculators](https://jesssullivan.github.io/transfemme-tailoring/fitting)
+- [My measurements (private, localStorage-backed profile)](https://jesssullivan.github.io/transfemme-tailoring/measurements)
 - [Dress pants](https://jesssullivan.github.io/transfemme-tailoring/pants)
 - [Dress shirts](https://jesssullivan.github.io/transfemme-tailoring/shirts)
 - [Vests / waistcoats](https://jesssullivan.github.io/transfemme-tailoring/vests)
