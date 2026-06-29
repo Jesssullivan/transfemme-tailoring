@@ -4,7 +4,8 @@
 	// line, and how much let-out reserve you keep. Default to fold-and-baste
 	// (reversible) until the body fitting confirms — cutting wool is irreversible
 	// and an over-take-in shows old needle holes and press-shine if let back out.
-	import { cm } from '$lib/calc/format';
+	import { fmt } from '$lib/calc/format';
+	import { measurements } from '$lib/calc/measurements.svelte';
 
 	let offset = $state(2); // inset being removed at this seam (from Distributor / Taper)
 	let originalSA = $state(1.5); // seam allowance already in the garment here
@@ -27,28 +28,28 @@
 
 	<div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Garment flat here (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={garmentFlat} />
+			<span class="text-surface-600 dark:text-surface-400">Garment flat here ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={garmentFlat} />
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Target circumference (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={targetCirc} />
+			<span class="text-surface-600 dark:text-surface-400">Target circumference ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={targetCirc} />
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Seams crossing here</span>
-			<input class="input" type="number" step="1" min="1" bind:value={seamsCrossing} />
+			<input class="input font-mono tabular-nums" type="number" step="1" min="1" bind:value={seamsCrossing} />
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Offset at this seam (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={offset} />
+			<span class="text-surface-600 dark:text-surface-400">Offset at this seam ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={offset} />
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Original allowance (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={originalSA} />
+			<span class="text-surface-600 dark:text-surface-400">Original allowance ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={originalSA} />
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
-			<span class="text-surface-600 dark:text-surface-400">Allowance to keep (cm)</span>
-			<input class="input" type="number" step="0.5" min="0" bind:value={SAkeep} />
+			<span class="text-surface-600 dark:text-surface-400">Allowance to keep ({measurements.unit})</span>
+			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={SAkeep} />
 		</label>
 	</div>
 
@@ -62,15 +63,15 @@
 		<caption class="sr-only">Seam reserve</caption>
 		<tbody>
 			<tr class="border-t border-surface-300 dark:border-surface-700">
-				<td class="py-1 pr-3 font-mono whitespace-nowrap">{cm(excessPerSeam)} cm</td>
+				<td class="py-1 pr-3 font-mono tabular-nums whitespace-nowrap">{fmt(excessPerSeam, measurements.unit)}</td>
 				<td class="py-1">Fabric beyond the new stitch line, per seam (original allowance + offset)</td>
 			</tr>
 			<tr class="border-t border-surface-300 dark:border-surface-700">
-				<td class="py-1 pr-3 font-mono whitespace-nowrap">{cm(wasteIfTrimmed)} cm</td>
+				<td class="py-1 pr-3 font-mono tabular-nums whitespace-nowrap">{fmt(wasteIfTrimmed, measurements.unit)}</td>
 				<td class="py-1">Waste per seam if you trim down to the kept allowance</td>
 			</tr>
 			<tr class="border-t border-surface-300 dark:border-surface-700">
-				<td class="py-1 pr-3 font-mono whitespace-nowrap">{cm(SAkeep)} cm</td>
+				<td class="py-1 pr-3 font-mono tabular-nums whitespace-nowrap">{fmt(SAkeep, measurements.unit)}</td>
 				<td class="py-1">Let-out reserve retained (more, if you fold-and-baste instead of cutting)</td>
 			</tr>
 		</tbody>

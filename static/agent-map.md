@@ -14,7 +14,7 @@
 
 ## Content Routes
 
-- `/` overview · `/machine` · `/tools` · `/fitting` (all five calculators) · `/pants` · `/shirts` · `/vests` · `/coats`
+- `/` overview · `/machine` · `/tools` · `/fitting` (all five calculators) · `/measurements` (private localStorage profile) · `/pants` · `/shirts` · `/vests` · `/coats`
 - `README.md` is the human source-of-record (hardware, measurements, citations).
 - Calculators live in `src/lib/components/calc/*.svelte`; shared formatting in `src/lib/calc/format.ts`.
 

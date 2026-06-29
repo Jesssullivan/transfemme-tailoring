@@ -5,6 +5,10 @@
 	import TaperCalculator from '$lib/components/calc/TaperCalculator.svelte';
 	import HemCuffMarker from '$lib/components/calc/HemCuffMarker.svelte';
 	import SeamReserveCheck from '$lib/components/calc/SeamReserveCheck.svelte';
+	import SeamOffsetDiagram from '$lib/components/diagrams/SeamOffsetDiagram.svelte';
+	import DartDiagram from '$lib/components/diagrams/DartDiagram.svelte';
+	import TaperDiagram from '$lib/components/diagrams/TaperDiagram.svelte';
+	import HemDiagram from '$lib/components/diagrams/HemDiagram.svelte';
 </script>
 
 <svelte:head>
@@ -20,7 +24,8 @@
 	<h1>Fitting theory &amp; measurements</h1>
 	<p>
 		Everything else on the site is a recipe; this page is the <em>why</em>. It's also where the five calculators live in
-		full — the garment guides just embed the ones they need.
+		full — the garment guides just embed the ones they need. Enter your numbers once on
+		<a href="{base}/measurements">your measurements</a> and they pre-fill here.
 	</p>
 
 	<h2 id="feminine-fit">What makes a fit read feminine</h2>
@@ -96,6 +101,12 @@
 		A <strong>seam</strong> removes <strong>twice</strong> the offset you mark (it eats fabric off both panels meeting
 		there). A <strong>dart</strong> removes <strong>exactly</strong> its pinched width.
 	</blockquote>
+	<figure class="not-prose my-4 flex flex-col items-center">
+		<SeamOffsetDiagram />
+		<figcaption class="text-surface-500 mt-1 text-xs">
+			A seam eats fabric off both panels, so it removes 2× the marked offset.
+		</figcaption>
+	</figure>
 	<p>
 		So a center-back offset = (CB share)/2, each of two side seams is marked at (side share)/4, and a dart's width =
 		(dart share)/number of darts. Keep any single dart at or below ~2.5–3&nbsp;cm — past that it points and puckers, so
@@ -140,7 +151,10 @@
 	</p>
 
 	<h2 id="measurements">Measurements to take</h2>
-	<p><strong>On the body</strong> (over the shapewear/forms you'll actually wear):</p>
+	<p>
+		Enter these once on <a href="{base}/measurements">your measurements</a> (saved privately in your browser) and the
+		calculators pre-fill. <strong>On the body</strong> (over the shapewear/forms you'll actually wear):
+	</p>
 	<ul>
 		<li>Shoulder point-to-point, and across-back width (blade to blade) for lat fullness.</li>
 		<li>
@@ -168,16 +182,39 @@
 
 	<h2 id="calculators">The calculators</h2>
 	<p>
-		All in centimetres (with an inch echo in the labels). Feed the <strong>Distributor</strong>
-		first; hand its dart intake to the <strong>Dart builder</strong>; use the <strong>Taper</strong>
-		for sleeves and legs and the <strong>Hem &amp; cuff marker</strong> for length; and run the
-		<strong>Seam reserve check</strong> before you commit a cut. They compute live and store nothing.
+		Toggle <strong>cm/in</strong> from the ruler menu in the header (it converts your whole profile). Feed the
+		<strong>Distributor</strong>
+		first; hand its dart intake to the <strong>Dart builder</strong>; use the <strong>Taper</strong> for sleeves and
+		legs and the <strong>Hem &amp; cuff marker</strong>
+		for length; and run the <strong>Seam reserve check</strong> before you commit a cut. They compute live and store nothing.
 	</p>
 
 	<WaistTakeInDistributor />
+
+	<figure class="not-prose my-2 flex flex-col items-center">
+		<DartDiagram />
+		<figcaption class="text-surface-500 mt-1 text-xs">
+			Double-pointed contour dart — full width at the waist, points above and below.
+		</figcaption>
+	</figure>
 	<DartBuilder />
+
+	<figure class="not-prose my-2 flex flex-col items-center">
+		<TaperDiagram />
+		<figcaption class="text-surface-500 mt-1 text-xs">
+			Taper from the upper point down — keep the offset ~0 over muscle.
+		</figcaption>
+	</figure>
 	<TaperCalculator />
+
+	<figure class="not-prose my-2 flex flex-col items-center">
+		<HemDiagram />
+		<figcaption class="text-surface-500 mt-1 text-xs">
+			Fold at the finished length; cut one hem-allowance below.
+		</figcaption>
+	</figure>
 	<HemCuffMarker />
+
 	<SeamReserveCheck />
 
 	<hr />

@@ -3,7 +3,18 @@
 import type { RequestHandler } from './$types';
 
 const SITE = 'https://jesssullivan.github.io/transfemme-tailoring';
-const PAGES: string[] = ['/', '/machine', '/tools', '/fitting', '/pants', '/shirts', '/vests', '/coats', '/agent'];
+const PAGES: string[] = [
+	'/',
+	'/machine',
+	'/tools',
+	'/fitting',
+	'/measurements',
+	'/pants',
+	'/shirts',
+	'/vests',
+	'/coats',
+	'/agent',
+];
 
 export const prerender = true;
 

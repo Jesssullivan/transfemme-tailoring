@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { base } from '$app/paths';
 	import { Menu, X } from '@lucide/svelte';
@@ -7,10 +8,28 @@
 	import { TinyVectors } from '@tummycrypt/tinyvectors';
 	import '../app.css';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+	import MeasurementsDrawer from '$lib/components/MeasurementsDrawer.svelte';
+	import { theme } from '$lib/theme.svelte';
+	import { measurements } from '$lib/calc/measurements.svelte';
 
 	let { children } = $props();
 
 	let mobileOpen = $state(false);
+
+	// Hydrate persisted state on mount (the FOUC script handles initial colors;
+	// this syncs the stores). measurements also self-inits at module load.
+	onMount(() => {
+		theme.init();
+		measurements.init();
+	});
+
+	// Autosave the measurement profile on any change (deep-tracked via the
+	// stringify read). Guarded so it never clobbers stored data before init.
+	$effect(() => {
+		// Read every field so any change re-runs this effect, then persist.
+		const snapshot = JSON.stringify({ b: measurements.body, g: measurements.garments, u: measurements.unit });
+		if (measurements.initialized && snapshot) measurements.save();
+	});
 
 	// Multi-page static site under a GitHub Pages project path: every internal
 	// link is prefixed with `base` ('' locally, '/transfemme-tailoring' deployed).
@@ -18,6 +37,7 @@
 		{ href: `${base}/machine`, label: 'Machine' },
 		{ href: `${base}/tools`, label: 'Tools' },
 		{ href: `${base}/fitting`, label: 'Fitting' },
+		{ href: `${base}/measurements`, label: 'Measurements' },
 		{ href: `${base}/pants`, label: 'Pants' },
 		{ href: `${base}/shirts`, label: 'Shirts' },
 		{ href: `${base}/vests`, label: 'Vests' },
@@ -103,6 +123,9 @@
 			</AppBar.Lead>
 			<AppBar.Headline></AppBar.Headline>
 			<AppBar.Trail>
+				<!-- Always-visible measurements drawer (mobile + desktop), for live tailoring. -->
+				<MeasurementsDrawer />
+
 				<nav class="hidden items-center gap-4 text-sm lg:flex" aria-label="Section navigation">
 					{#each navLinks as { href, label } (href)}
 						<a {href} class="hover:text-primary-500 transition-colors" aria-label={label}>{label}</a>
