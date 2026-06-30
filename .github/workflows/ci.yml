@@ -86,7 +86,6 @@ jobs:
       BAZEL_REMOTE_HEADER: ${{ secrets.BAZEL_REMOTE_HEADER }}
       BAZEL_REMOTE_CACHE_HEADER: ${{ secrets.BAZEL_REMOTE_CACHE_HEADER }}
       BAZEL_CREDENTIAL_HELPER: ${{ secrets.BAZEL_CREDENTIAL_HELPER }}
-      BAZEL_OUTPUT_USER_ROOT: ${{ runner.temp }}/flywheel-bazel-user-root
     steps:
       - uses: actions/checkout@v6
 
