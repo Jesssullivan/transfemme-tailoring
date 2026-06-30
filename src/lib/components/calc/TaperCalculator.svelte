@@ -7,6 +7,7 @@
 	// strangling the quad or the flexed bicep.
 	import { round1, fmt } from '$lib/calc/format';
 	import { measurements } from '$lib/calc/measurements.svelte';
+	import Glyph from '$lib/components/Glyph.svelte';
 
 	let upperCurrent = $state(40); // garment circ at the upper point (bicep / thigh)
 	let upperTarget = $state(40); // target finished circ at the upper point (body flexed + ease)
@@ -20,14 +21,16 @@
 	const o2 = $derived(nSeams > 0 ? R2 / (2 * nSeams) : 0);
 </script>
 
-<div class="card preset-outlined-surface-500 not-prose my-6 p-4">
+<div class="card preset-outlined-surface-500 not-prose my-6 border-t-2 border-t-primary-500/40 p-4">
 	<div class="mb-3 flex flex-wrap items-center justify-between gap-3">
-		<h3 class="m-0 text-lg font-semibold">Sleeve / leg taper</h3>
+		<h3 class="m-0 flex items-center gap-2 text-lg font-semibold">
+			<Glyph name="calculator" class="text-primary-500" />Sleeve / leg taper
+		</h3>
 		<div class="flex gap-1" role="group" aria-label="Number of taper seams">
 			{#each [1, 2] as s (s)}
 				<button
 					type="button"
-					class="badge {nSeams === s ? 'preset-filled-primary-500' : 'preset-outlined-surface-500'}"
+					class="badge min-h-10 px-3 {nSeams === s ? 'preset-filled-primary-500' : 'preset-outlined-surface-500'}"
 					aria-pressed={nSeams === s}
 					onclick={() => (nSeams = s)}
 				>
@@ -44,20 +47,63 @@
 	<div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Upper now ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={upperCurrent} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={upperCurrent}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Upper target ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={upperTarget} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={upperTarget}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Lower now ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={lowerCurrent} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={lowerCurrent}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Lower target ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={lowerTarget} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={lowerTarget}
+			/>
 		</label>
+	</div>
+
+	<div class="my-4 grid grid-cols-2 gap-4 rounded-container bg-surface-100-900 p-4">
+		<div>
+			<div
+				class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+			>
+				{round1(o1)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+			</div>
+			<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Upper offset / seam</div>
+		</div>
+		<div>
+			<div
+				class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+			>
+				{round1(o2)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+			</div>
+			<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Lower offset / seam</div>
+		</div>
 	</div>
 
 	<table class="mt-3 w-full text-sm">
@@ -81,9 +127,12 @@
 	</table>
 
 	{#if o1 < 0 || o2 < 0}
-		<p class="mt-2 text-sm text-warning-700 dark:text-warning-300">
-			A target is larger than the garment here (negative offset) — that point must be
-			<em>let out</em>, not taken in. Check you have the seam allowance for it.
+		<p class="mt-2 flex items-start gap-2 text-sm text-warning-700 dark:text-warning-300">
+			<Glyph name="triangle-exclamation" class="mt-0.5" />
+			<span>
+				A target is larger than the garment here (negative offset) — that point must be
+				<em>let out</em>, not taken in. Check you have the seam allowance for it.
+			</span>
 		</p>
 	{/if}
 	<p class="mt-2 text-xs text-surface-500">

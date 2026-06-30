@@ -4,8 +4,9 @@
 	// line, and how much let-out reserve you keep. Default to fold-and-baste
 	// (reversible) until the body fitting confirms — cutting wool is irreversible
 	// and an over-take-in shows old needle holes and press-shine if let back out.
-	import { fmt } from '$lib/calc/format';
+	import { round1, fmt } from '$lib/calc/format';
 	import { measurements } from '$lib/calc/measurements.svelte';
+	import Glyph from '$lib/components/Glyph.svelte';
 
 	let offset = $state(2); // inset being removed at this seam (from Distributor / Taper)
 	let originalSA = $state(1.5); // seam allowance already in the garment here
@@ -19,8 +20,10 @@
 	const wasteIfTrimmed = $derived(originalSA + offset - SAkeep);
 </script>
 
-<div class="card preset-outlined-surface-500 not-prose my-6 p-4">
-	<h3 class="m-0 text-lg font-semibold">Seam allowance &amp; reversibility check</h3>
+<div class="card preset-outlined-surface-500 not-prose my-6 border-t-2 border-t-primary-500/40 p-4">
+	<h3 class="m-0 flex items-center gap-2 text-lg font-semibold">
+		<Glyph name="calculator" class="text-primary-500" />Seam allowance &amp; reversibility check
+	</h3>
 	<p class="mt-1 mb-3 text-xs text-surface-500">
 		Run this before committing a cut. Fold-and-baste (don't trim) for the first wearing test, then trim to the kept
 		allowance only after the fit is locked.
@@ -29,35 +32,102 @@
 	<div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Garment flat here ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={garmentFlat} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={garmentFlat}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Target circumference ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={targetCirc} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={targetCirc}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Seams crossing here</span>
-			<input class="input font-mono tabular-nums" type="number" step="1" min="1" bind:value={seamsCrossing} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="1"
+				min="1"
+				bind:value={seamsCrossing}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Offset at this seam ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={offset} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={offset}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Original allowance ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={originalSA} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={originalSA}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Allowance to keep ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={SAkeep} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={SAkeep}
+			/>
 		</label>
 	</div>
 
-	<p class="mt-3">
-		<span class="badge {feasible ? 'preset-filled-success-500' : 'preset-filled-error-500'}" aria-live="polite">
-			{feasible ? 'Go — wide enough to hit target' : 'No-go — not enough width for target + allowance'}
-		</span>
-	</p>
+	<div
+		class="my-4 flex items-center gap-3 rounded-container p-4 text-base font-semibold {feasible
+			? 'preset-filled-success-500'
+			: 'preset-filled-error-500'}"
+		aria-live="polite"
+	>
+		<Glyph name={feasible ? 'check' : 'times'} class="text-2xl" />
+		<span>{feasible ? 'Go — wide enough to hit target' : 'No-go — not enough width for target + allowance'}</span>
+	</div>
+
+	<div class="my-4 grid grid-cols-2 gap-4 rounded-container bg-surface-100-900 p-4 sm:grid-cols-3">
+		<div>
+			<div
+				class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+			>
+				{round1(excessPerSeam)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+			</div>
+			<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Beyond stitch line / seam</div>
+		</div>
+		<div>
+			<div
+				class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+			>
+				{round1(wasteIfTrimmed)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+			</div>
+			<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Waste if trimmed / seam</div>
+		</div>
+		<div>
+			<div
+				class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+			>
+				{round1(SAkeep)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+			</div>
+			<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Let-out reserve kept</div>
+		</div>
+	</div>
 
 	<table class="mt-3 w-full text-sm">
 		<caption class="sr-only">Seam reserve</caption>
