@@ -6,6 +6,7 @@
 	import { Dialog } from '@skeletonlabs/skeleton-svelte';
 	import { Ruler, X } from '@lucide/svelte';
 	import { measurements, type BodyProfile } from '$lib/calc/measurements.svelte';
+	import Glyph from '$lib/components/Glyph.svelte';
 
 	let open = $state(false);
 
@@ -21,7 +22,10 @@
 </script>
 
 <Dialog {open} onOpenChange={(d) => (open = d.open)} closeOnInteractOutside closeOnEscape preventScroll>
-	<Dialog.Trigger class="hover:bg-surface-200-800 rounded p-2" aria-label="My measurements">
+	<Dialog.Trigger
+		class="hover:bg-surface-200-800 inline-flex min-h-11 min-w-11 items-center justify-center rounded p-2"
+		aria-label="My measurements"
+	>
 		<Ruler class="h-5 w-5" />
 	</Dialog.Trigger>
 	<Dialog.Backdrop class="fixed inset-0 z-40 bg-black/40" />
@@ -39,7 +43,9 @@
 					{#each ['cm', 'in'] as u (u)}
 						<button
 							type="button"
-							class="badge {measurements.unit === u ? 'preset-filled-primary-500' : 'preset-outlined-surface-500'}"
+							class="badge min-h-10 px-3 {measurements.unit === u
+								? 'preset-filled-primary-500'
+								: 'preset-outlined-surface-500'}"
 							aria-pressed={measurements.unit === u}
 							onclick={() => measurements.setUnit(u as 'cm' | 'in')}>{u}</button
 						>
@@ -50,7 +56,7 @@
 						<span class="text-surface-600 dark:text-surface-400">{q.label}</span>
 						<span class="flex items-center gap-1">
 							<input
-								class="input w-24 text-right font-mono tabular-nums"
+								class="input min-h-11 w-24 text-right font-mono text-base tabular-nums"
 								type="number"
 								step="0.5"
 								min="0"
@@ -63,7 +69,9 @@
 				<a href="{base}/measurements" class="text-primary-500 hover:underline" onclick={() => (open = false)}>
 					Full measurement profile →
 				</a>
-				<p class="text-surface-500 text-xs">Saved on this device only — nothing is uploaded.</p>
+				<p class="text-surface-500 flex items-center gap-1.5 text-xs">
+					<Glyph name="lock" />Saved on this device only — nothing is uploaded.
+				</p>
 			</div>
 		</Dialog.Content>
 	</Dialog.Positioner>

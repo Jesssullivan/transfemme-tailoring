@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { measurements, BODY_FIELDS } from '$lib/calc/measurements.svelte';
+	import Glyph from '$lib/components/Glyph.svelte';
 
 	const GROUPS = [
 		{ id: 'torso', label: 'Torso' },
@@ -51,6 +52,11 @@
 		<strong>this browser only</strong> (nothing is uploaded). Numbers are in your chosen unit; toggling converts them.
 		Not sure what to measure? See the
 		<a href="{base}/fitting#measurements">measurement guide</a>.
+	</p>
+
+	<p class="not-prose text-surface-500 flex items-center gap-1.5 text-xs">
+		<Glyph name="lock" class="text-primary-500" />Device-local &amp; private — use Export below to keep a portable
+		backup.
 	</p>
 
 	<div class="card preset-outlined-surface-500 not-prose my-5 flex flex-wrap items-center gap-3 p-4 text-sm">

@@ -5,6 +5,7 @@
 	// Top reference = waist for trousers, shoulder for sleeves.
 	import { round1, fmt } from '$lib/calc/format';
 	import { measurements } from '$lib/calc/measurements.svelte';
+	import Glyph from '$lib/components/Glyph.svelte';
 
 	let Lcurrent = $state(108); // current finished length from the top reference
 	let Ltarget = $state(102); // desired finished length
@@ -17,14 +18,16 @@
 	const fabricBelow = $derived(mode === 'cuff' ? 2 * C + H : H);
 </script>
 
-<div class="card preset-outlined-surface-500 not-prose my-6 p-4">
+<div class="card preset-outlined-surface-500 not-prose my-6 border-t-2 border-t-primary-500/40 p-4">
 	<div class="mb-3 flex flex-wrap items-center justify-between gap-3">
-		<h3 class="m-0 text-lg font-semibold">Hem &amp; cuff marker</h3>
+		<h3 class="m-0 flex items-center gap-2 text-lg font-semibold">
+			<Glyph name="calculator" class="text-primary-500" />Hem &amp; cuff marker
+		</h3>
 		<div class="flex gap-1" role="group" aria-label="Hem or cuff">
 			{#each ['plain', 'cuff'] as m (m)}
 				<button
 					type="button"
-					class="badge {mode === m ? 'preset-filled-primary-500' : 'preset-outlined-surface-500'}"
+					class="badge min-h-10 px-3 {mode === m ? 'preset-filled-primary-500' : 'preset-outlined-surface-500'}"
 					aria-pressed={mode === m}
 					onclick={() => (mode = m as 'plain' | 'cuff')}
 				>
@@ -37,33 +40,83 @@
 	<div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Current length ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={Lcurrent} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={Lcurrent}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Target length ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={Ltarget} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={Ltarget}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Hem allowance ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={H} />
+			<input class="input min-h-11 font-mono text-base tabular-nums" type="number" step="0.5" min="0" bind:value={H} />
 		</label>
 		{#if mode === 'cuff'}
 			<label class="flex flex-col gap-1 text-sm">
 				<span class="text-surface-600 dark:text-surface-400">Cuff depth ({measurements.unit})</span>
-				<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={C} />
+				<input
+					class="input min-h-11 font-mono text-base tabular-nums"
+					type="number"
+					step="0.5"
+					min="0"
+					bind:value={C}
+				/>
 			</label>
 		{/if}
 	</div>
 
 	{#if S < 0}
-		<p class="mt-3 text-sm text-warning-700 dark:text-warning-300">
-			The target is {fmt(-S, measurements.unit)} longer than the current length — you must
-			<em>let down</em> existing hem allowance instead; you can only lengthen up to (existing allowance − {fmt(
-				H,
-				measurements.unit,
-			)}).
+		<p class="mt-3 flex items-start gap-2 text-sm text-warning-700 dark:text-warning-300">
+			<Glyph name="triangle-exclamation" class="mt-0.5" />
+			<span>
+				The target is {fmt(-S, measurements.unit)} longer than the current length — you must
+				<em>let down</em> existing hem allowance instead; you can only lengthen up to (existing allowance − {fmt(
+					H,
+					measurements.unit,
+				)}).
+			</span>
 		</p>
 	{:else}
+		<div class="my-4 grid grid-cols-2 gap-4 rounded-container bg-surface-100-900 p-4 sm:grid-cols-3">
+			<div>
+				<div
+					class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+				>
+					{round1(S)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+				</div>
+				<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Shorten by</div>
+			</div>
+			<div>
+				<div
+					class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+				>
+					{round1(Ltarget)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+				</div>
+				<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Fold line</div>
+			</div>
+			<div>
+				<div
+					class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+				>
+					{round1(cutLine)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+				</div>
+				<div class="mt-1 flex items-center gap-1 text-xs tracking-wide text-surface-500 uppercase">
+					<Glyph name="scissors" class="text-primary-500" />Cut line
+				</div>
+			</div>
+		</div>
+
 		<table class="mt-3 w-full text-sm">
 			<caption class="sr-only">Hem / cuff fold and cut lines</caption>
 			<tbody>
@@ -88,10 +141,13 @@
 						<td class="py-1">Inside (cuff-top) fold</td>
 					</tr>
 				{/if}
-				<tr class="border-t-2 border-surface-400 dark:border-surface-600 font-semibold">
+				<tr class="border-t-2 border-surface-400 font-semibold dark:border-surface-600">
 					<td class="py-1 pr-3 font-mono tabular-nums whitespace-nowrap">{fmt(cutLine, measurements.unit)}</td>
-					<td class="py-1"
-						>Cut line — trim everything below ({fmt(fabricBelow, measurements.unit)} of fabric below the finished length)</td
+					<td class="flex items-center gap-1.5 py-1"
+						><Glyph name="scissors" class="text-primary-500" />Cut line — trim everything below ({fmt(
+							fabricBelow,
+							measurements.unit,
+						)} of fabric below the finished length)</td
 					>
 				</tr>
 			</tbody>

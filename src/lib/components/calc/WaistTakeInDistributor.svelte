@@ -6,6 +6,7 @@
 	// pinched width. Back-loaded by default. Feeds the Dart builder.
 	import { round1, fmt } from '$lib/calc/format';
 	import { measurements } from '$lib/calc/measurements.svelte';
+	import Glyph from '$lib/components/Glyph.svelte';
 
 	let garmentWaistFlat = $state(52); // measured flat (single layer), buttoned
 	let bodyWaist = $state(82); // true natural waist over the shapewear/forms worn
@@ -29,8 +30,10 @@
 	const myWaist = $derived(measurements.body0('waist', 0));
 </script>
 
-<div class="card preset-outlined-surface-500 not-prose my-6 p-4">
-	<h3 class="m-0 text-lg font-semibold">Waist take-in distributor</h3>
+<div class="card preset-outlined-surface-500 not-prose my-6 border-t-2 border-t-primary-500/40 p-4">
+	<h3 class="m-0 flex items-center gap-2 text-lg font-semibold">
+		<Glyph name="calculator" class="text-primary-500" />Waist take-in distributor
+	</h3>
 	<p class="mt-1 mb-3 text-xs text-surface-500">
 		Splits the total waist intake across the center-back seam, both side seams, and the darts, then gives the offset to
 		mark at each. A seam removes 2× its marked offset; a dart removes its full pinched width.
@@ -39,52 +42,140 @@
 	<div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Garment waist, flat ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={garmentWaistFlat} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={garmentWaistFlat}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Body waist ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={bodyWaist} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={bodyWaist}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Ease ({measurements.unit})</span>
-			<input class="input font-mono tabular-nums" type="number" step="0.5" min="0" bind:value={ease} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="0.5"
+				min="0"
+				bind:value={ease}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Center-back %</span>
-			<input class="input font-mono tabular-nums" type="number" step="5" min="0" max="100" bind:value={cbPct} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="5"
+				min="0"
+				max="100"
+				bind:value={cbPct}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Side seams %</span>
-			<input class="input font-mono tabular-nums" type="number" step="5" min="0" max="100" bind:value={sidePct} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="5"
+				min="0"
+				max="100"
+				bind:value={sidePct}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Darts %</span>
-			<input class="input font-mono tabular-nums" type="number" step="5" min="0" max="100" bind:value={dartPct} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="5"
+				min="0"
+				max="100"
+				bind:value={dartPct}
+			/>
 		</label>
 		<label class="flex flex-col gap-1 text-sm">
 			<span class="text-surface-600 dark:text-surface-400">Number of darts</span>
-			<input class="input font-mono tabular-nums" type="number" step="1" min="0" bind:value={nDarts} />
+			<input
+				class="input min-h-11 font-mono text-base tabular-nums"
+				type="number"
+				step="1"
+				min="0"
+				bind:value={nDarts}
+			/>
 		</label>
 	</div>
 
 	{#if myWaist > 0}
-		<button type="button" class="badge preset-outlined-primary-500 mt-3" onclick={() => (bodyWaist = myWaist)}>
-			↺ Use my waist ({fmt(myWaist, measurements.unit)})
+		<button
+			type="button"
+			class="badge preset-outlined-primary-500 mt-3 inline-flex min-h-10 items-center gap-1.5 px-3"
+			onclick={() => (bodyWaist = myWaist)}
+		>
+			<Glyph name="refresh" />Use my waist ({fmt(myWaist, measurements.unit)})
 		</button>
 	{/if}
 
 	{#if pctSum !== 100}
-		<p class="mt-3 text-sm text-warning-700 dark:text-warning-300">
-			Distribution adds to {pctSum}% — adjust so center-back + sides + darts = 100%.
+		<p class="mt-3 flex items-start gap-2 text-sm text-warning-700 dark:text-warning-300">
+			<Glyph name="triangle-exclamation" class="mt-0.5" />
+			<span>Distribution adds to {pctSum}% — adjust so center-back + sides + darts = 100%.</span>
 		</p>
 	{/if}
 
 	{#if R <= 0}
-		<p class="mt-3 text-sm text-warning-700 dark:text-warning-300">
-			Total to remove is {fmt(R, measurements.unit)} — the garment already fits or must be
-			<em>let out</em>, not taken in.
+		<p class="mt-3 flex items-start gap-2 text-sm text-warning-700 dark:text-warning-300">
+			<Glyph name="triangle-exclamation" class="mt-0.5" />
+			<span>
+				Total to remove is {fmt(R, measurements.unit)} — the garment already fits or must be
+				<em>let out</em>, not taken in.
+			</span>
 		</p>
 	{:else}
+		<div class="my-4 grid grid-cols-2 gap-4 rounded-container bg-surface-100-900 p-4 sm:grid-cols-4">
+			<div>
+				<div
+					class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+				>
+					{round1(R)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+				</div>
+				<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Total to remove</div>
+			</div>
+			<div>
+				<div
+					class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+				>
+					{round1(cbOffset)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+				</div>
+				<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Center-back, in</div>
+			</div>
+			<div>
+				<div
+					class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+				>
+					{round1(sideOffsetEach)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+				</div>
+				<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Each side seam</div>
+			</div>
+			<div>
+				<div
+					class="font-mono text-3xl leading-none font-bold tabular-nums text-primary-700 sm:text-4xl dark:text-primary-300"
+				>
+					{round1(dartWidthEach)}<span class="ml-1 text-base font-normal text-surface-500">{measurements.unit}</span>
+				</div>
+				<div class="mt-1 text-xs tracking-wide text-surface-500 uppercase">Per dart</div>
+			</div>
+		</div>
+
 		<table class="mt-3 w-full text-sm">
 			<caption class="sr-only">Waist take-in distribution</caption>
 			<tbody>
@@ -109,9 +200,12 @@
 			</tbody>
 		</table>
 		{#if dartWidthEach > 3}
-			<p class="mt-2 text-sm text-warning-700 dark:text-warning-300">
-				Each dart is {fmt(dartWidthEach, measurements.unit)} — past ~3 cm a single dart points and puckers. Add a dart or
-				shift the surplus to a seam.
+			<p class="mt-2 flex items-start gap-2 text-sm text-warning-700 dark:text-warning-300">
+				<Glyph name="triangle-exclamation" class="mt-0.5" />
+				<span>
+					Each dart is {fmt(dartWidthEach, measurements.unit)} — past ~3 cm a single dart points and puckers. Add a dart or
+					shift the surplus to a seam.
+				</span>
 			</p>
 		{/if}
 		<p class="mt-2 text-xs text-surface-500">
