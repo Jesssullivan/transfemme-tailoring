@@ -62,3 +62,50 @@ jobs:
       # Phase-2 Flywheel uplift (`just flywheel-build` / `just flywheel-test`).
       - name: bazelisk mod graph
         run: nix develop --command bazelisk mod graph
+
+  # Phase-2 GloriousFlywheel cache-first remote build + test. Inert until
+  # enabled: gated on the FLYWHEEL_ENABLED repo variable (job-level `if:` can't
+  # read secrets), so the spoke stays green (job skipped) until you wire the
+  # live cluster. Endpoints + auth come from env/secrets ONLY — never .bazelrc.
+  # PRs are read-only cache consumers; only push-to-main may upload.
+  flywheel:
+    name: Flywheel cache-first build + test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: ${{ vars.FLYWHEEL_ENABLED == 'true' }}
+    permissions:
+      contents: read
+    env:
+      BAZEL_REMOTE_CACHE: ${{ secrets.BAZEL_REMOTE_CACHE }}
+      # Cache-only on ubuntu-latest. Do NOT set BAZEL_REMOTE_EXECUTOR here:
+      # executor-backed is refused off-cluster (linux-x86_64 worker pin).
+      GF_BAZEL_SUBSTRATE_MODE: shared-cache-backed
+      # Read-only on PRs; upload only on trusted push-to-main.
+      GF_BAZEL_REMOTE_UPLOAD: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+      # Optional auth material, runtime-only; the wrapper skips any that are empty.
+      BAZEL_REMOTE_HEADER: ${{ secrets.BAZEL_REMOTE_HEADER }}
+      BAZEL_REMOTE_CACHE_HEADER: ${{ secrets.BAZEL_REMOTE_CACHE_HEADER }}
+      BAZEL_CREDENTIAL_HELPER: ${{ secrets.BAZEL_CREDENTIAL_HELPER }}
+      BAZEL_OUTPUT_USER_ROOT: ${{ runner.temp }}/flywheel-bazel-user-root
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      # Shape-only diagnostics (never contact the cache); fail fast with guidance.
+      - name: Flywheel doctor
+        run: nix develop --command just flywheel-doctor
+
+      - name: Flywheel cache attachment
+        run: nix develop --command just flywheel-info
+
+      # Bazel JS targets consume rules_js //:node_modules (npm_link_all_packages),
+      # so `just setup` (pnpm install) is intentionally not required here.
+      - name: Flywheel cache-first build
+        run: nix develop --command just flywheel-build
+
+      - name: Flywheel cache-first test
+        run: nix develop --command just flywheel-test

@@ -2,7 +2,7 @@
 # instantiation. Schema: docs/CI-SCHEMA.md §7.
 
 spoke_slug   = "site-scaffold"
-brand_domain = "jesssullivan.github.io/transfemme-tailoring"
+brand_domain = "transscendsurvival.org/transfemme-tailoring"
 github_org   = "tinyland-inc"
 
 # Blahaj GitHub App installation ID. Obtain from the Blahaj App owner

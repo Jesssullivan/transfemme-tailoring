@@ -1,5 +1,13 @@
 # Phase 2 — GloriousFlywheel cache-first uplift
 
+> **Status (2026-06-29):** the spoke-side wiring is implemented — `//:ci_validation_suite`
+> is tagged `flywheel-eligible` and a gated `flywheel` job in `.github/workflows/ci.yml`
+> runs `just flywheel-build` / `just flywheel-test` cache-first. It is **inert until
+> enabled**: set the `FLYWHEEL_ENABLED` repo variable + the `BAZEL_REMOTE_CACHE` secret,
+> and enroll the tenant in `tinyland-inc/GloriousFlywheel` `config/spoke-registry.json`
+> (instance `spoke-transfemme-tailoring`). Until enrolled, the token-exchange mints at
+> most cache-**read**; only an enrolled default-branch push can write the cache.
+
 Runbook for moving this spoke from the **Phase 1** posture (canonical `pnpm run
 build`; Bazel as a module-graph integrity proof; Flywheel endpoints dormant) to
 **cache-first remote build / check / test** through

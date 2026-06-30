@@ -3,7 +3,7 @@
 	"schema_version": 1,
 	"spoke": {
 		"name": "transfemme-tailoring",
-		"domain": "jesssullivan.github.io/transfemme-tailoring"
+		"domain": "transscendsurvival.org/transfemme-tailoring"
 	},
 	"defaults": {
 		"runner_class": "tinyland-nix",

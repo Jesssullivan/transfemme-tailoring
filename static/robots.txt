@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jesssullivan.github.io/transfemme-tailoring/sitemap.xml
+Sitemap: https://transscendsurvival.org/transfemme-tailoring/sitemap.xml

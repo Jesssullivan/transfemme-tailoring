@@ -4,7 +4,7 @@
 	"private": true,
 	"type": "module",
 	"description": "Build-log and interactive calculators for tailoring oversized, masculine-cut formalwear into a well-fitted transfeminine silhouette on a treadle Singer. Static SvelteKit spoke spawned from tinyland-inc/site.scaffold.",
-	"homepage": "https://jesssullivan.github.io/transfemme-tailoring/",
+	"homepage": "https://transscendsurvival.org/transfemme-tailoring/",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Jesssullivan/transfemme-tailoring.git"

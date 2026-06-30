@@ -45,7 +45,7 @@
 	];
 
 	const SITE_NAME = 'Transfemme Tailoring';
-	const SITE_URL = 'https://jesssullivan.github.io/transfemme-tailoring';
+	const SITE_URL = 'https://transscendsurvival.org/transfemme-tailoring';
 	const SITE_TITLE = 'Transfemme Tailoring — refitting masc formalwear, in the open';
 	const SITE_DESCRIPTION =
 		'A first-person build log and interactive alteration calculators for converting oversized, masculine-cut formalwear into a well-fitted transfeminine silhouette: machine setup, tools, fitting theory, and stepwise guides for pants, shirts, vests, and coats.';
