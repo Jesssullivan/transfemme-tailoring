@@ -6,7 +6,7 @@ is the short overlay of gotchas.
 - **Single entrypoint**: `just <recipe>` inside `nix develop` (direnv auto-loads).
   `just setup` → `just dev` → `just check` → `just build`.
 - **Static spoke**: SvelteKit `adapter-static` → personal GitHub Pages
-  (`jesssullivan.github.io/transfemme-tailoring`). No backend, no secrets, no
+  (`transscendsurvival.org/transfemme-tailoring`). No backend, no secrets, no
   runtime API routes.
 - **Build base path**: `BASE_PATH=/transfemme-tailoring` for the deployed build;
   unset = root (local dev/preview).

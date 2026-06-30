@@ -131,6 +131,11 @@ js_test(
 
 test_suite(
     name = "ci_validation_suite",
+    # A test_suite's tags are a positive FILTER over its members (both already
+    # carry flywheel-eligible), not metadata — so this keeps both and stays
+    # consistent under --config=flywheel-executor's tag filter. Do NOT add
+    # "manual" here: it would drop both members and resolve to zero targets.
+    tags = ["flywheel-eligible"],
     tests = [
         ":svelte_check_test",
         ":unit_tests",

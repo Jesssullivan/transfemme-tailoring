@@ -10,7 +10,7 @@ This lab notebook covers machine setup + a treadle restoration log, the tool
 bill-of-materials, fitting theory and measurements, and stepwise per-garment
 guides for pants, shirts, vests and coats. A static SvelteKit SPA built from
 [`tinyland-inc/site.scaffold`](https://github.com/tinyland-inc/site.scaffold),
-published to GitHub Pages at **https://jesssullivan.github.io/transfemme-tailoring/**;
+published to GitHub Pages at **https://transscendsurvival.org/transfemme-tailoring/**;
 the pages carry interactive Svelte 5 alteration calculators, and **this README is
 the source-of-record** for hardware, measurements, and citations.
 

@@ -1,7 +1,7 @@
 # Security policy
 
 This repository is the source for the static marketing/devtool site at
-<https://jesssullivan.github.io/transfemme-tailoring>. The site itself is purely static — no server
+<https://transscendsurvival.org/transfemme-tailoring>. The site itself is purely static — no server
 runtime, no user accounts, no inbound data, no analytics.
 
 ## Reporting a vulnerability

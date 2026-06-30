@@ -25,21 +25,21 @@
 
 ## Content
 
-- [Overview](https://jesssullivan.github.io/transfemme-tailoring/)
-- [Machine setup & the treadle restoration](https://jesssullivan.github.io/transfemme-tailoring/machine)
-- [Tools & BOM](https://jesssullivan.github.io/transfemme-tailoring/tools)
-- [Fitting theory & calculators](https://jesssullivan.github.io/transfemme-tailoring/fitting)
-- [My measurements (private, localStorage-backed profile)](https://jesssullivan.github.io/transfemme-tailoring/measurements)
-- [Dress pants](https://jesssullivan.github.io/transfemme-tailoring/pants)
-- [Dress shirts](https://jesssullivan.github.io/transfemme-tailoring/shirts)
-- [Vests / waistcoats](https://jesssullivan.github.io/transfemme-tailoring/vests)
-- [Suit coats](https://jesssullivan.github.io/transfemme-tailoring/coats)
+- [Overview](https://transscendsurvival.org/transfemme-tailoring/)
+- [Machine setup & the treadle restoration](https://transscendsurvival.org/transfemme-tailoring/machine)
+- [Tools & BOM](https://transscendsurvival.org/transfemme-tailoring/tools)
+- [Fitting theory & calculators](https://transscendsurvival.org/transfemme-tailoring/fitting)
+- [My measurements (private, localStorage-backed profile)](https://transscendsurvival.org/transfemme-tailoring/measurements)
+- [Dress pants](https://transscendsurvival.org/transfemme-tailoring/pants)
+- [Dress shirts](https://transscendsurvival.org/transfemme-tailoring/shirts)
+- [Vests / waistcoats](https://transscendsurvival.org/transfemme-tailoring/vests)
+- [Suit coats](https://transscendsurvival.org/transfemme-tailoring/coats)
 
 ## Agent Routes
 
-- [Agent AX map](https://jesssullivan.github.io/transfemme-tailoring/agent)
-- [Machine route map](https://jesssullivan.github.io/transfemme-tailoring/agent-map.md)
-- [Sitemap](https://jesssullivan.github.io/transfemme-tailoring/sitemap.xml)
+- [Agent AX map](https://transscendsurvival.org/transfemme-tailoring/agent)
+- [Machine route map](https://transscendsurvival.org/transfemme-tailoring/agent-map.md)
+- [Sitemap](https://transscendsurvival.org/transfemme-tailoring/sitemap.xml)
 
 ## Operating Constraints
 

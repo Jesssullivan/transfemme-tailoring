@@ -3,7 +3,7 @@
 Working contract for coding agents and LLMs operating in this repo. A **personal
 static spoke** spawned from `tinyland-inc/site.scaffold` (FULL scaffold posture:
 Bazel + Nix + pnpm + Flywheel binding), deployed to **personal GitHub Pages** at
-`https://jesssullivan.github.io/transfemme-tailoring/`.
+`https://transscendsurvival.org/transfemme-tailoring/`.
 
 ## Repo Role
 
@@ -67,9 +67,10 @@ Pages is the house baseline."* This spoke implements the Option-A fix locally.
   inhouse-package-parity`). Never loosen them to caret ranges or "drop to public
   npm" to simplify a build — the module graph is authoritative.
 - Bazel exists for **module-graph integrity proofs**; the canonical app build
-  stays `pnpm run build`. Cache-first remote build/test is the **Phase-2 Flywheel
-  uplift** (`just flywheel-build` / `just flywheel-test` / `just flywheel-fetch`),
-  which fail-fast without an org-supplied `BAZEL_REMOTE_CACHE` (dormant here).
+  stays `pnpm run build`. Cache-first remote build/test is now wired as the gated
+  `flywheel` CI job (`just flywheel-build` / `just flywheel-test`); it activates
+  once `BAZEL_REMOTE_CACHE` + `FLYWHEEL_ENABLED` are set, still fail-fast and
+  read-only on PRs by design.
 
 ## Personal posture — dormant & declined org surfaces
 
@@ -89,9 +90,16 @@ conformance, never wired live):
   reusable `spoke-ci.yml` (inaccessible from a personal repo). Replaced with a
   self-contained Nix + `just` CI. **Honest drift:** this flips conformance item 2
   (ci-templates SemVer pin) to a MANUAL/deviation — intentional, not silent.
-- **GloriousFlywheel remote cache/RBE**: binding present (`.bazelrc.flywheel`,
-  `scripts/gloriousflywheel-bazel.sh`, `just flywheel-*`); endpoints dormant until
-  the Phase-2 uplift supplies them.
+- **GloriousFlywheel remote cache/RBE — WIRED (Phase-2 active).** The `flywheel`
+  CI job (`.github/workflows/ci.yml`) runs `just flywheel-build` + `just
+  flywheel-test` cache-first through `scripts/gloriousflywheel-bazel.sh`, gated on
+  `vars.FLYWHEEL_ENABLED == 'true'` + the `BAZEL_REMOTE_CACHE` secret so it stays
+  green (skipped) when unset. Contract unchanged: **endpoints stay out of
+  `.bazelrc`** (env/secret-driven only) and **PRs are read-only cache consumers**
+  — only push-to-main sets `GF_BAZEL_REMOTE_UPLOAD=true`. Mode is
+  `shared-cache-backed` (cache only); executor-backed RBE stays off (refused on
+  ubuntu-latest by the linux-x86_64 worker pin). Live cache-write/executor still
+  waits on tenant enrollment in GloriousFlywheel `config/spoke-registry.json`.
 
 ## What not to do
 
