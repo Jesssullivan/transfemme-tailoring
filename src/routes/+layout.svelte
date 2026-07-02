@@ -115,7 +115,7 @@
 			<AppBar.Lead>
 				<a
 					href="{base}/"
-					class="hover:text-primary-500 inline-flex items-center gap-2 font-mono text-lg font-bold tracking-tight whitespace-nowrap transition-colors"
+					class="hover:text-primary-500 inline-flex min-w-0 items-center gap-2 font-mono text-base font-bold tracking-tight whitespace-nowrap transition-colors sm:text-lg"
 					aria-label={SITE_NAME + ' home'}
 				>
 					<SaturnMark class="text-primary-500 h-[1.05em] w-[1.05em]" />{SITE_NAME}</a
