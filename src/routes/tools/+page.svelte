@@ -84,13 +84,14 @@
 	<div class="card preset-outlined-warning-500 not-prose my-4 p-4 text-sm">
 		<ul class="m-0 list-disc space-y-2 pl-5">
 			<li>
-				<strong>Bonded-nylon upholstery thread</strong> (BulingBuling 8-spool 210D/3 kit) — too heavy and stiff for shirting and suiting; it puckers seams
-				and the nylon can <em>melt</em> under a wool press. Keep it for heavy structural repairs; buy fine all-purpose polyester
-				for garment seams.
+				<strong>Bonded-nylon upholstery thread</strong> (BulingBuling 8-spool 210D/3 kit) — too heavy and stiff for
+				shirting and suiting; it puckers seams and the nylon can <em>melt</em> under a wool press. Keep it for heavy structural
+				repairs; buy fine all-purpose polyester for garment seams.
 			</li>
 			<li>
-				<strong>2″ steel T-pins</strong> (Newkita 100-pack, E0106) — too thick for shirting and lining (they leave holes and snag). Reserve them for
-				the dress form and heavy coat layers; buy fine 0.5&nbsp;mm glass-head silk pins for the actual garments.
+				<strong>2″ steel T-pins</strong> (Newkita 100-pack, E0106) — too thick for shirting and lining (they leave holes and
+				snag). Reserve them for the dress form and heavy coat layers; buy fine 0.5&nbsp;mm glass-head silk pins for the actual
+				garments.
 			</li>
 		</ul>
 	</div>
