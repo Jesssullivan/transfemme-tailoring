@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 // Static scaffold regression guard: no document-level horizontal overflow at
-// canonical breakpoints, and every same-page hash link on the home route
-// resolves to an actual element.
+// canonical breakpoints on the guarded routes, and every same-page hash link
+// on the home route resolves to an actual element.
 
 const breakpoints = [
 	{ label: 'mobile-small', width: 390, height: 1200 },
@@ -11,18 +11,27 @@ const breakpoints = [
 	{ label: 'desktop', width: 1440, height: 1200 },
 ];
 
-for (const bp of breakpoints) {
-	test(`home page has no document overflow at ${bp.label} (${bp.width}px)`, async ({ page }) => {
-		await page.setViewportSize({ width: bp.width, height: bp.height });
-		await page.goto('/');
-		await page.waitForLoadState('networkidle');
-		const { scrollWidth, innerWidth } = await page.evaluate(() => ({
-			scrollWidth: document.documentElement.scrollWidth,
-			innerWidth: window.innerWidth,
-		}));
-		// Tolerate up to 1px subpixel rounding; anything beyond means real overflow.
-		expect(scrollWidth, `${bp.label} document overflow`).toBeLessThanOrEqual(innerWidth + 1);
-	});
+// Home caught the 390px brand-mark overflow; /wants is the newest page and
+// the one most likely to be opened on a phone from a shared link.
+const routes = [
+	{ label: 'home', path: '/' },
+	{ label: 'wants', path: '/wants' },
+];
+
+for (const route of routes) {
+	for (const bp of breakpoints) {
+		test(`${route.label} page has no document overflow at ${bp.label} (${bp.width}px)`, async ({ page }) => {
+			await page.setViewportSize({ width: bp.width, height: bp.height });
+			await page.goto(route.path);
+			await page.waitForLoadState('networkidle');
+			const { scrollWidth, innerWidth } = await page.evaluate(() => ({
+				scrollWidth: document.documentElement.scrollWidth,
+				innerWidth: window.innerWidth,
+			}));
+			// Tolerate up to 1px subpixel rounding; anything beyond means real overflow.
+			expect(scrollWidth, `${route.label} ${bp.label} document overflow`).toBeLessThanOrEqual(innerWidth + 1);
+		});
+	}
 }
 
 test('home-route same-page hash links all resolve to an element', async ({ page }) => {
