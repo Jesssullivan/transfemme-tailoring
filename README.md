@@ -102,8 +102,9 @@ guessed URL.
 
 **Still needed — the priority gap is pressing** (pressing is ~half of tailoring):
 a tailoring steam iron, a sturdy board/table + wool mat, a tailor's ham, a sleeve
-board, a wooden clapper, a press cloth, and pinking shears / a pinking-blade rotary
-(a straight rotary blade does **not** pink). Plus consumables: fine poly + silk
+board, a wooden clapper, a press cloth, pinking shears / a pinking-blade rotary
+(a straight rotary blade does **not** pink), and a serger / overlocker
+(Singer/Babylock class) for one-pass edge-finishing. Plus consumables: fine poly + silk
 thread, fine pins, chalk/tracing tools, hand + machine needles, twill/stay tape,
 fusible + sew-in interfacing, beeswax, binding + Fray-Check, spare bobbins, spare
 buttons + thin pads.

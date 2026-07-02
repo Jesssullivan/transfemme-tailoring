@@ -126,6 +126,10 @@
 			<strong>Pinking shears or a pinking-blade rotary head</strong> — the only quick no-serger fray-resist edge besides a
 			hand overcast or a Hong-Kong bind (the straight rotary won't pink).
 		</li>
+		<li>
+			<strong>Serger / overlocker</strong> (Singer/Babylock class) — fast, durable edge-finishing on shirting and lining seams
+			in one pass. A want rather than a blocker: pinking, turn-and-stitch, or a Hong-Kong bind covers the gap until one lands.
+		</li>
 	</ul>
 
 	<h2 id="consumables">Consumables to buy</h2>
