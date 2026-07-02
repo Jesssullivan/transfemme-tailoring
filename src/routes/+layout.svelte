@@ -36,6 +36,7 @@
 	const navLinks: { href: string; label: string }[] = [
 		{ href: `${base}/machine`, label: 'Machine' },
 		{ href: `${base}/tools`, label: 'Tools' },
+		{ href: `${base}/wants`, label: 'Wants' },
 		{ href: `${base}/fitting`, label: 'Fitting' },
 		{ href: `${base}/measurements`, label: 'Measurements' },
 		{ href: `${base}/pants`, label: 'Pants' },

@@ -16,8 +16,10 @@
 	<p>
 		The honest version: I have a good cutting-and-unpicking kit and the working machine, two items that are the <em
 			>wrong</em
-		> tool for fine formalwear, and a glaring gap where the pressing equipment should be. Pressing is roughly half of tailoring,
-		so the iron is the priority purchase, not more notions.
+		>
+		tool for fine formalwear, and a glaring gap where the pressing equipment should be. Pressing is roughly half of tailoring,
+		so the iron is the priority purchase, not more notions. The short, shareable version of the gap list lives on the
+		<a href="{base}/wants">wants page</a>.
 	</p>
 
 	<h2 id="owned">What I own</h2>
@@ -37,7 +39,8 @@
 						stacked wool. <a
 							href="https://cdn.poconosewandvac.com/web/products/instruction-manuals/pdfs/singer/hd6600c-hd6605c/hd6600c-hd6605c-instruction-manual.pdf"
 							rel="external noopener">Instruction manual (PDF)</a
-						>.</td
+						>
+						· <a href="https://www.amazon.com/dp/B0F1TD3LYG" rel="external noopener">ASIN B0F1TD3LYG</a>.</td
 					>
 				</tr>
 				<tr class="border-surface-300 dark:border-surface-700 border-t">
@@ -54,13 +57,15 @@
 						snips at the machine. <a
 							href="https://www.singer.com/products/singer-8-5-proseries-scissors"
 							rel="external noopener">8.5″ ProSeries at singer.com</a
-						>.</td
+						>
+						· <a href="https://www.amazon.com/dp/B09V93QPB4" rel="external noopener">ASIN B09V93QPB4</a>.</td
 					>
 				</tr>
 				<tr class="border-surface-300 dark:border-surface-700 border-t">
 					<td class="py-1 pr-3 font-medium">Seam rippers (4) + snips (FIVEIZERO set)</td>
 					<td class="py-1"
-						>The most-used tool — every alteration starts by unpicking factory seams, hems and linings.</td
+						>The most-used tool — every alteration starts by unpicking factory seams, hems and linings.
+						<a href="https://www.amazon.com/dp/B0D9KNZ39G" rel="external noopener">ASIN B0D9KNZ39G</a>.</td
 					>
 				</tr>
 				<tr class="border-surface-300 dark:border-surface-700 border-t">
@@ -84,14 +89,16 @@
 	<div class="card preset-outlined-warning-500 not-prose my-4 p-4 text-sm">
 		<ul class="m-0 list-disc space-y-2 pl-5">
 			<li>
-				<strong>Bonded-nylon upholstery thread</strong> (BulingBuling 8-spool 210D/3 kit) — too heavy and stiff for
-				shirting and suiting; it puckers seams and the nylon can <em>melt</em> under a wool press. Keep it for heavy structural
-				repairs; buy fine all-purpose polyester for garment seams.
+				<strong>Bonded-nylon upholstery thread</strong> (BulingBuling 8-spool 210D/3 kit,
+				<a href="https://www.amazon.com/dp/B0D22F8JRC" rel="external noopener">ASIN B0D22F8JRC</a>) — too heavy and
+				stiff for shirting and suiting; it puckers seams and the nylon can <em>melt</em> under a wool press. Keep it for heavy
+				structural repairs; buy fine all-purpose polyester for garment seams.
 			</li>
 			<li>
-				<strong>2″ steel T-pins</strong> (Newkita 100-pack, E0106) — too thick for shirting and lining (they leave holes and
-				snag). Reserve them for the dress form and heavy coat layers; buy fine 0.5&nbsp;mm glass-head silk pins for the actual
-				garments.
+				<strong>2″ steel T-pins</strong> (Newkita 100-pack, E0106,
+				<a href="https://www.amazon.com/dp/B09Y5B66R8" rel="external noopener">ASIN B09Y5B66R8</a>) — too thick for
+				shirting and lining (they leave holes and snag). Reserve them for the dress form and heavy coat layers; buy fine
+				0.5&nbsp;mm glass-head silk pins for the actual garments.
 			</li>
 		</ul>
 	</div>

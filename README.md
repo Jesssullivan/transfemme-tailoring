@@ -94,11 +94,11 @@ guessed URL.
 
 | ASIN | Product | Model | Documentation |
 |---|---|---|---|
-| `B0F1TD3LYG` | SINGER Heavy Duty **6600C** Sterling computerized machine | HD6600C | [Instruction manual (PDF, probed 200)](https://cdn.poconosewandvac.com/web/products/instruction-manuals/pdfs/singer/hd6600c-hd6605c/hd6600c-hd6605c-instruction-manual.pdf) · [singer.com product page](https://www.singer.com/products/singer-heavy-duty-6600c-sterling-sewing-machine) |
-| `B09V93QPB4` | SINGER ProSeries scissors bundle — 8.5″ heavy-duty bent + 4.5″ detail + 5″ snips (the owned shear set) | usus-30459 | [singer.com — 8.5″ ProSeries (bundle's primary component, SKU D00561)](https://www.singer.com/products/singer-8-5-proseries-scissors) |
-| `B0F9KNZ39G` | FIVEIZERO seam-ripper set — 2 large + 2 small + thread snips (the owned four rippers) | — | [Brand site (probed 200; no per-product manual exists)](https://thefiveizero.com/) |
-| `B0D22F8JRC` | BulingBuling bonded-nylon upholstery thread kit — 8 spools, 210D/3, 218 yd (the owned-but-mismatched heavy thread) | — | Search: `bulingbuling 210D/3 bonded nylon upholstery thread 218 yards specifications` |
-| `B09Y5B66R8` | Newkita 2″ T-pins, 100 pack, nickel-plated (the owned-but-mismatched pins) | E0106 | Search: `Newkita T-Pins 100 pack 2 inch model E0106 specifications` |
+| [`B0F1TD3LYG`](https://www.amazon.com/dp/B0F1TD3LYG) | SINGER Heavy Duty **6600C** Sterling computerized machine | HD6600C | [Instruction manual (PDF, probed 200)](https://cdn.poconosewandvac.com/web/products/instruction-manuals/pdfs/singer/hd6600c-hd6605c/hd6600c-hd6605c-instruction-manual.pdf) · [singer.com product page](https://www.singer.com/products/singer-heavy-duty-6600c-sterling-sewing-machine) |
+| [`B09V93QPB4`](https://www.amazon.com/dp/B09V93QPB4) | SINGER ProSeries scissors bundle — 8.5″ heavy-duty bent + 4.5″ detail + 5″ snips (the owned shear set) | usus-30459 | [singer.com — 8.5″ ProSeries (bundle's primary component, SKU D00561)](https://www.singer.com/products/singer-8-5-proseries-scissors) |
+| [`B0D9KNZ39G`](https://www.amazon.com/dp/B0D9KNZ39G) | FIVEIZERO seam-ripper set — 2 large + 2 small + thread snips (the owned four rippers) | — | [Brand site (probed 200; no per-product manual exists)](https://thefiveizero.com/) |
+| [`B0D22F8JRC`](https://www.amazon.com/dp/B0D22F8JRC) | BulingBuling bonded-nylon upholstery thread kit — 8 spools, 210D/3, 218 yd (the owned-but-mismatched heavy thread) | — | Search: `bulingbuling 210D/3 bonded nylon upholstery thread 218 yards specifications` |
+| [`B09Y5B66R8`](https://www.amazon.com/dp/B09Y5B66R8) | Newkita 2″ T-pins, 100 pack, nickel-plated (the owned-but-mismatched pins) | E0106 | Search: `Newkita T-Pins 100 pack 2 inch model E0106 specifications` |
 
 **Still needed — the priority gap is pressing** (pressing is ~half of tailoring):
 a tailoring steam iron, a sturdy board/table + wool mat, a tailor's ham, a sleeve

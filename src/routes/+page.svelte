@@ -19,6 +19,13 @@
 				'What I own (and the two mismatches to work around), what to buy, and why a real iron is the priority purchase.',
 		},
 		{
+			href: `${base}/wants`,
+			icon: 'thumb-tack',
+			title: 'Wants',
+			blurb:
+				'The distilled wish list: pressing kit first, then edge-finishing and consumables — and what not to double-buy.',
+		},
+		{
 			href: `${base}/fitting`,
 			icon: 'calculator',
 			title: 'Fitting theory & calculators',
