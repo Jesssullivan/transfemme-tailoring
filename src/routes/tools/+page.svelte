@@ -31,10 +31,13 @@
 			</thead>
 			<tbody>
 				<tr class="border-surface-300 dark:border-surface-700 border-t">
-					<td class="py-1 pr-3 font-medium">SINGER 6600C (computerized)</td>
+					<td class="py-1 pr-3 font-medium">SINGER 6600C (computerized, HD6600C)</td>
 					<td class="py-1"
 						>The workhorse: buttonholes, zigzag/overcast edge-finishing, stretch stitches for linings, power through
-						stacked wool.</td
+						stacked wool. <a
+							href="https://cdn.poconosewandvac.com/web/products/instruction-manuals/pdfs/singer/hd6600c-hd6605c/hd6600c-hd6605c-instruction-manual.pdf"
+							rel="external noopener">Instruction manual (PDF)</a
+						>.</td
 					>
 				</tr>
 				<tr class="border-surface-300 dark:border-surface-700 border-t">
@@ -45,14 +48,17 @@
 					>
 				</tr>
 				<tr class="border-surface-300 dark:border-surface-700 border-t">
-					<td class="py-1 pr-3 font-medium">8.5″ bent shears + detail scissors + snips</td>
+					<td class="py-1 pr-3 font-medium">8.5″ bent shears + detail scissors + snips (SINGER ProSeries bundle)</td>
 					<td class="py-1"
 						>Bent shears true the new seam lines (dedicate to fabric only); detail scissors clip curves and dart points;
-						snips at the machine.</td
+						snips at the machine. <a
+							href="https://www.singer.com/products/singer-8-5-proseries-scissors"
+							rel="external noopener">8.5″ ProSeries at singer.com</a
+						>.</td
 					>
 				</tr>
 				<tr class="border-surface-300 dark:border-surface-700 border-t">
-					<td class="py-1 pr-3 font-medium">Seam rippers (4) + snips</td>
+					<td class="py-1 pr-3 font-medium">Seam rippers (4) + snips (FIVEIZERO set)</td>
 					<td class="py-1"
 						>The most-used tool — every alteration starts by unpicking factory seams, hems and linings.</td
 					>
@@ -78,13 +84,14 @@
 	<div class="card preset-outlined-warning-500 not-prose my-4 p-4 text-sm">
 		<ul class="m-0 list-disc space-y-2 pl-5">
 			<li>
-				<strong>Bonded-nylon upholstery thread</strong> — too heavy and stiff for shirting and suiting; it puckers seams
-				and the nylon can <em>melt</em> under a wool press. Keep it for heavy structural repairs; buy fine all-purpose polyester
-				for garment seams.
+				<strong>Bonded-nylon upholstery thread</strong> (BulingBuling 8-spool 210D/3 kit) — too heavy and stiff for
+				shirting and suiting; it puckers seams and the nylon can <em>melt</em> under a wool press. Keep it for heavy structural
+				repairs; buy fine all-purpose polyester for garment seams.
 			</li>
 			<li>
-				<strong>2″ steel T-pins</strong> — too thick for shirting and lining (they leave holes and snag). Reserve them for
-				the dress form and heavy coat layers; buy fine 0.5&nbsp;mm glass-head silk pins for the actual garments.
+				<strong>2″ steel T-pins</strong> (Newkita 100-pack, E0106) — too thick for shirting and lining (they leave holes and
+				snag). Reserve them for the dress form and heavy coat layers; buy fine 0.5&nbsp;mm glass-head silk pins for the actual
+				garments.
 			</li>
 		</ul>
 	</div>
