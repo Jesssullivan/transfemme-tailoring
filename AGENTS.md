@@ -3,7 +3,7 @@
 Working contract for coding agents and LLMs operating in this repo. A **personal
 static spoke** spawned from `tinyland-inc/site.scaffold` (FULL scaffold posture:
 Bazel + Nix + pnpm + Flywheel binding), deployed to **personal GitHub Pages** at
-`https://transscendsurvival.org/transfemme-tailoring/`.
+`https://jesssullivan.github.io/transfemme-tailoring/`.
 
 ## Repo Role
 
