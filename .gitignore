@@ -61,3 +61,4 @@ tofu/tfplan
 .aider*
 # Local dev artifacts
 .huskycat/
+.gstack/
