@@ -360,13 +360,25 @@ sync:
 analyze:
     cd {{ root }} && BUILD_ANALYZE=true pnpm run build
 
+# Bazel --output_user_root for the two recipes below (lab TIN-4631), in order:
+# BAZEL_OUTPUT_USER_ROOT when set; no flag when ~/.bazelrc already declares
+# `startup --output_user_root`, so the host's rc wins (sting's is on
+# /srv/fast-local); otherwise ${XDG_CACHE_HOME:-$HOME/.cache}/bazel/<repo>-user-root.
+# Never $TMPDIR or /tmp: the root holds Bazel's install base and output bases.
+
 # Bazel mod graph smoke (registry-resolution proof)
 bazel-graph:
-    cd {{ root }} && bazelisk --output_user_root="${BAZEL_OUTPUT_USER_ROOT:-${TMPDIR:-/tmp}/site-scaffold-bazel-user-root}" mod graph
+    cd {{ root }} && if [ -n "${BAZEL_OUTPUT_USER_ROOT:-}" ]; then set -- --output_user_root="${BAZEL_OUTPUT_USER_ROOT}"; \
+      elif grep -Eqs '^[[:space:]]*startup[[:space:]]+--output_user_root=' "${HOME:-}/.bazelrc"; then set --; \
+      else set -- --output_user_root="${XDG_CACHE_HOME:-$HOME/.cache}/bazel/transfemme-tailoring-user-root"; fi \
+      && bazelisk "$@" mod graph
 
 # Bazel query smoke (BUILD target shape proof; not cache/RBE validation)
 bazel-query target="//:ci_validation_suite":
-    cd {{ root }} && bazelisk --output_user_root="${BAZEL_OUTPUT_USER_ROOT:-${TMPDIR:-/tmp}/site-scaffold-bazel-user-root}" query "{{ target }}"
+    cd {{ root }} && if [ -n "${BAZEL_OUTPUT_USER_ROOT:-}" ]; then set -- --output_user_root="${BAZEL_OUTPUT_USER_ROOT}"; \
+      elif grep -Eqs '^[[:space:]]*startup[[:space:]]+--output_user_root=' "${HOME:-}/.bazelrc"; then set --; \
+      else set -- --output_user_root="${XDG_CACHE_HOME:-$HOME/.cache}/bazel/transfemme-tailoring-user-root"; fi \
+      && bazelisk "$@" query "{{ target }}"
 
 # Generate changelog (git-cliff)
 changelog:
