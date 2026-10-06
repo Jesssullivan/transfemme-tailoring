@@ -338,10 +338,10 @@
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tar.bzl/0.5.1/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_tinyland_color_utils/0.2.3/MODULE.bazel": "f262802a2410ac19e13b740f78fcb5b163121075c0fa1723561c52e26d296420",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_tinyland_color_utils/0.2.3/source.json": "c8a5f00e0120a69f9d4540bba6c7b4712a71063695360f709687c7793b53aae7",
-    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_tinyvectors/0.3.0/MODULE.bazel": "86111548364fb58dfc372ef47d8e829dc664a1a0a6ebe5ffda13522f831e6ec7",
-    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_tinyvectors/0.3.0/source.json": "8de4b4dcc7bde71162423efc8fb44d34c48952c6baa3b83e1c845665c54cadad",
-    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_a11y/0.2.2/MODULE.bazel": "4b01916fb00c441200fd3300cfff718c3bd64bbdc201538dbffc6dc21dd6abeb",
-    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_a11y/0.2.2/source.json": "901877893faed5d9baf7eb1a8984014d164ab82adbdcdb70c04666889252fa7a",
+    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_tinyvectors/0.3.7/MODULE.bazel": "185c0860e22a576ce7d6a82db214aab4b44256e32136f24f2a3bd551a661b079",
+    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_tinyvectors/0.3.7/source.json": "a70af3828453fa18076dce3a214e1e71f2a8444400d542571879640b4bd8d1d0",
+    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_a11y/0.2.4/MODULE.bazel": "60bc7184a2cecc630a3a6c67828d5b99469e320cc871b85aaba0e0182d8ae4b5",
+    "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_a11y/0.2.4/source.json": "5b0f28b4f25faa97012b529a0766ef980b00ae967dcc01bd7af5519ea5da7850",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_skeleton_colors/0.2.2/MODULE.bazel": "5616807b389ae043a78ca884f8d51f48de91065f17499e302a1e5fc2cbe235b8",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/tummycrypt_vite_plugin_skeleton_colors/0.2.2/source.json": "396c7f18e254137b90a58d0e76a632ca82935fb2fd2285fae7f74aba31eeb059",
     "https://raw.githubusercontent.com/tinyland-inc/bazel-registry/main/modules/upb/0.0.0-20220923-a547704/MODULE.bazel": "not found",
@@ -356,7 +356,7 @@
     "@@aspect_rules_js+//npm:extensions.bzl%pnpm": {
       "general": {
         "bzlTransitiveDigest": "8Fn1V6ojA2oD887lYsnqxAWs3gaYzxWM3Wxi0UmA5tI=",
-        "usagesDigest": "ghkTlRu/ZipZXmPlYBviRR2sT7SJsyaSOPu+jeOl25I=",
+        "usagesDigest": "63g2W7IA/qGrQdGnqvarISX4HIhHDs25kLaCmIl3vHs=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -622,7 +622,7 @@
     "@@aspect_rules_ts+//ts:extensions.bzl%ext": {
       "general": {
         "bzlTransitiveDigest": "kpFi+ae3stSvLHgS7Fiwn/tb3J3dDqMOi1EP3tJ/TKY=",
-        "usagesDigest": "LK3nc1SSphbg2WmRwY4Blbzx8r38n6QFqYTgO48fjjQ=",
+        "usagesDigest": "Mlw8/mdmb/lwqxf7y8/WKH423k9kuhuHW+hkhjanr5M=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -870,7 +870,7 @@
     "@@rules_nodejs+//nodejs:extensions.bzl%node": {
       "general": {
         "bzlTransitiveDigest": "4pUxCNc22K4I+6+4Nxu52Hur12tFRfa1JMsN5mdDv60=",
-        "usagesDigest": "g8k1BPxPRExxJdVnOQHIZhfXBBwazLBgdnP/7vmuQAY=",
+        "usagesDigest": "R634EYh1lmu5QUEHluysQKzgXZzd68YqQg/Ht3FbvU4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
