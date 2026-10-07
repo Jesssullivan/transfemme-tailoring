@@ -86,12 +86,12 @@ gh run watch
 ## What to NOT do during a spawn
 
 - Do not call raw `pnpm`/`vite`/`bazelisk` outside the Justfile — the rebrand
-  encodes Skeleton 4.15.2 and the Tailwind v4 compat shim; bypassing `just`
+  encodes the Skeleton 5.0.1 exact pin (no compat shim); bypassing `just`
   breaks the pin discipline.
 - Do not add runtime DB, auth, payments, mutation APIs, or ActivityPub delivery
   workers. A spoke is a read-only static consumer of `tinyland.dev` snapshots.
-- Do not unpin Skeleton or the Tailwind v4 shim without coordination across
-  spokes (Skeleton 4.x → 5.x is a fleet-wide migration).
+- Do not unpin Skeleton from 5.0.1 exact (estate ruling RP1, TIN-5694) and do
+  not restore the Skeleton 4 Tailwind compat shim.
 - Do not fork `tummycrypt_tinyland_color_utils`, `tinyvectors`, or the vite
   plugins per-site. Pin via `tinyland-inc/bazel-registry`.
 - Do not add Cloudflare API credentials to the spoke. `blahaj` owns DNS,

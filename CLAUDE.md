@@ -10,7 +10,9 @@ is the short overlay of gotchas.
   runtime API routes.
 - **Build base path**: `BASE_PATH=/transfemme-tailoring` for the deployed build;
   unset = root (local dev/preview).
-- **Skeleton 4.15.2 + the Tailwind-v4 compat shim are pinned** — don't touch.
+- **Skeleton 5.0.1 is pinned exact** (RP1, TIN-5694). The Skeleton 4
+  Tailwind-v4 compat shim and `vite-plugin-skeleton-colors` are deleted and stay
+  deleted.
 - **Bazel BCR is the dependency SSOT.** `@tummycrypt/*` npm entries are
   exact-pinned compatibility edges (`just inhouse-package-parity`) — never loosen
   them or "drop to public npm."

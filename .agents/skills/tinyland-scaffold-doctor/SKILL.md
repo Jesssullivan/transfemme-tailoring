@@ -26,7 +26,7 @@ allowed-tools:
 ## What "drift" means
 
 Drift is divergence between this repo and the scaffold tag it was spawned from.
-The scaffold ships pinned versions (Skeleton 4.15.2, Tailwind v4 compat shim),
+The scaffold ships pinned versions (Skeleton 5.0.1 exact, no Tailwind compat shim),
 recipe shapes (`just check` / `just ci` / `just conformance`), schemas
 (`docs/schemas/lanes.schema.json`, `tinyland-repo-manifest.schema.json`), and
 authority boundaries (no Cloudflare creds in a spoke, no runtime broker fetches,
