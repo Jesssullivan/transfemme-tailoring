@@ -50,9 +50,14 @@ Pages is the house baseline."* This spoke implements the Option-A fix locally.
 
 ## Theme & Skeleton
 
-- **Skeleton 4.15.2** (pinned exact). Do not upgrade casually.
-- Tailwind v4 + the `skeletonTailwindV4Compat()` shim in `vite.config.ts` rewrites
-  Skeleton's `@variant` / `@apply variant-` to stable equivalents — do not remove.
+- **Skeleton 5.0.1** (pinned exact, both `@skeletonlabs/skeleton` and
+  `@skeletonlabs/skeleton-svelte`; estate ruling RP1, TIN-5694). Do not
+  downgrade, range-pin, or take a prerelease.
+- Tailwind v4 with no compatibility shim. The Skeleton 4 era
+  `skeletonTailwindV4Compat()` plugin and `@tummycrypt/vite-plugin-skeleton-colors`
+  (npm dep and `bazel_dep`) are deleted and stay deleted: Skeleton 5 emits
+  `@variant` on purpose and declares every colour-pair token itself. The theme's
+  root background uses `--color-root-bg-light` / `--color-root-bg-dark`.
 - The omux house theme is vendored at `src/lib/styles/themes/omux.css`; dark mode
   via the FOUC script in `src/app.html` (`data-*` attribute).
 
@@ -60,8 +65,7 @@ Pages is the house baseline."* This spoke implements the Option-A fix locally.
 
 - The dependency source of truth is the **Bazel BCR / `tinyland-inc/bazel-registry`**
   (via `bazel_dep` + `bazelisk mod graph`). In-house `@tummycrypt/*` packages
-  (`tinyvectors`, `tinyland-color-utils`, `vite-plugin-a11y`,
-  `vite-plugin-skeleton-colors`) are pulled as **Bazel modules**; their
+  (`tinyvectors`, `tinyland-color-utils`, `vite-plugin-a11y`) are pulled as **Bazel modules**; their
   `package.json` entries are **compatibility edges for pnpm/Vite only** and must
   stay **exact-pinned to the matching `bazel_dep` version** (`just
   inhouse-package-parity`). Never loosen them to caret ranges or "drop to public
@@ -105,8 +109,8 @@ conformance, never wired live):
 
 - Don't call `pnpm` / `vite` / `bazelisk` outside the Justfile (add a recipe).
 - Don't add runtime/server code, secrets, or vendor credentials — this is static.
-- Don't remove the Skeleton v4 compat shim or `static/.nojekyll`.
-- Don't unpin Skeleton/Tailwind, or loosen the `@tummycrypt/*` exact pins.
+- Don't restore the Skeleton 4 compat shim, and don't remove `static/.nojekyll`.
+- Don't unpin Skeleton (5.0.1 exact) or Tailwind, or loosen the `@tummycrypt/*` exact pins.
 - Don't wire the dormant org surfaces (tofu / Blahaj / pulse) on this personal spoke.
 - Don't introduce raw `--remote_cache=` / `--remote_executor=` endpoints (the
   Flywheel wrapper contract is endpoint-free).

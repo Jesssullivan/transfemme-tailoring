@@ -33,18 +33,17 @@
 		"@lucide/svelte": "^1.16.0",
 		"@tummycrypt/tinyland-color-utils": "0.2.3",
 		"@tummycrypt/tinyvectors": "0.3.0",
-		"effect": "^3.21.2"
+		"effect": "4.0.1"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.60.0",
-		"@skeletonlabs/skeleton": "4.15.2",
-		"@skeletonlabs/skeleton-svelte": "4.15.2",
+		"@skeletonlabs/skeleton": "5.0.1",
+		"@skeletonlabs/skeleton-svelte": "5.0.1",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.59.1",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.0",
 		"@tummycrypt/vite-plugin-a11y": "0.2.2",
-		"@tummycrypt/vite-plugin-skeleton-colors": "0.2.2",
 		"@types/node": "^22.19.19",
 		"@vitest/coverage-v8": "^4.1.6",
 		"eslint": "^9.39.2",

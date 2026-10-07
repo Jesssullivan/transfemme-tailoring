@@ -1,5 +1,13 @@
 # Skeleton v5 Watch & Upgrade Plan
 
+> **Superseded 2026-10-07 by ruling RP1** (TIN-3692 comment 4198f782; SSOT
+> TIN-5694). This June 2026 watch plan is historical and is not current
+> policy. The estate standard is Skeleton 5.0.1 exact (both
+> `@skeletonlabs/skeleton` and `@skeletonlabs/skeleton-svelte`) and Effect
+> 4.0.1 exact, verified as npm latest on 2026-10-07. Any "stay pinned on
+> 4.15.2" or "defer v5" text below records what was planned in June, not
+> what applies now.
+
 Date: 2026-06-05
 
 Linear: TIN-788 (M5.2). Parent: TIN-734 umbrella. Tracks the post-launch
