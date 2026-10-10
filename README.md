@@ -21,9 +21,9 @@ the source-of-record** for hardware, measurements, and citations.
 ## Quick start
 
 ```sh
-just setup     # pnpm install (inside the Nix devshell)
-just dev       # vite dev server
-just build     # static build into ./build  (BASE_PATH=/transfemme-tailoring)
+just setup     # pnpm install + Bazel-linked in-house packages and SvelteKit types
+just dev       # vite dev server (bazel run //:dev)
+just build     # Bazel //:build into ./build  (BASE_PATH=/transfemme-tailoring)
 just preview   # local production preview
 ```
 
@@ -233,6 +233,7 @@ the `ci-templates` reusable workflow) are carried **documented-but-dormant** and
 never wired live — see `AGENTS.md`. CI is a self-contained Nix + `just` workflow;
 this intentionally diverges from the scaffold's `ci-templates` SemVer-pin
 conformance item (a documented deviation, not silent drift). Bazel is the
-dependency source-of-truth; the `@tummycrypt/*` npm entries are exact-pinned
-compatibility edges. Phase 2 is the GloriousFlywheel cache-first remote
+dependency source-of-truth: the `@tummycrypt/*` packages come only from their
+Bazel registry modules (no npm specifiers), and Bazel builds, checks and tests
+the site (SvelteKit 3.0.1, TypeScript 7.0.2). Phase 2 is the GloriousFlywheel cache-first remote
 build/test uplift.

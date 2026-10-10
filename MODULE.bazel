@@ -1,10 +1,11 @@
 """
 transfemme-tailoring - Bazel Module Configuration
 
-Static-first SvelteKit consumer of the @tummycrypt/* npm packages
-produced by tinyland-inc/bazel-registry. The canonical site build is
-`pnpm run build`; Bazel exists for module-graph integrity proofs and
-is exercised via `bazel mod graph` smoke in CI.
+Static-first SvelteKit site. Bazel owns the build, check, test and dev
+targets (BUILD.bazel); `just` is the operator entrypoint. The in-house
+@tummycrypt/* packages come only from xoxd-ai/bazel-registry modules
+(bazel_dep below) and are linked into node_modules by npm_link_package in
+BUILD.bazel (RU9). package.json carries no in-house specifier.
 
 Stock module picks (replace per-site as needed):
 
@@ -33,17 +34,18 @@ bazel_dep(name = "rules_pkg", version = "1.1.0")
 # JS/TS toolchain (Aspect)
 bazel_dep(name = "rules_nodejs", version = "6.7.3")
 bazel_dep(name = "aspect_rules_js", version = "2.9.1")
-bazel_dep(name = "aspect_rules_ts", version = "3.8.4")
+bazel_dep(name = "aspect_rules_ts", version = "3.10.1")
 bazel_dep(name = "aspect_rules_swc", version = "2.6.1")
 
-# Tinyland building-block deps via tinyland-inc/bazel-registry
+# Tinyland building-block deps via xoxd-ai/bazel-registry, at the newest
+# registered versions (RU9). BUILD.bazel links each one into node_modules.
 bazel_dep(name = "tummycrypt_tinyland_color_utils", version = "0.2.3")
-bazel_dep(name = "tummycrypt_vite_plugin_a11y", version = "0.2.2")
-bazel_dep(name = "tummycrypt_tinyvectors", version = "0.3.0")
+bazel_dep(name = "tummycrypt_vite_plugin_a11y", version = "0.3.0")
+bazel_dep(name = "tummycrypt_tinyvectors", version = "0.3.7")
 
-# Node 22.13.1
+# SvelteKit 3 requires Node >= 22.17.
 node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
-node.toolchain(node_version = "22.13.1")
+node.toolchain(node_version = "22.22.0")
 
 # pnpm 10.13.1
 pnpm = use_extension("@aspect_rules_js//npm:extensions.bzl", "pnpm")
@@ -59,19 +61,25 @@ use_repo(pnpm, "pnpm")
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm")
 npm.npm_translate_lock(
     name = "npm",
-    npmrc = "//:.npmrc",
-    pnpm_lock = "//:pnpm-lock.yaml",
+    # RU13 patch set (copied from site.scaffold patches/): npm_translate_lock
+    # applies the pnpm patchedDependencies recorded in pnpm-lock.yaml.
     data = [
+        "//:.pnpmfile.cjs",
         "//:package.json",
+        "//:patches/@sveltejs__kit@3.0.1.patch",
+        "//:patches/devalue@5.9.4.patch",
+        "//:patches/svelte-check@4.7.6.patch",
         "//:pnpm-workspace.yaml",
     ],
+    npmrc = "//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
 )
 use_repo(npm, "npm")
 
-# TypeScript 5.9.3 (rules_ts cannot parse caret ranges — exact required)
-rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext")
-rules_ts_ext.deps(ts_version = "5.9.3")
-use_repo(rules_ts_ext, "npm_typescript")
+# TypeScript 7.0.2 (RU13), matching package.json `typescript` exactly.
+typescript = use_extension("@aspect_rules_ts//ts:extensions.bzl", "typescript")
+typescript.deps(version = "7.0.2")
+use_repo(typescript, "npm_typescript")
 
 # SWC for any future ts_project targets
 swc = use_extension("@aspect_rules_swc//swc:extensions.bzl", "swc")

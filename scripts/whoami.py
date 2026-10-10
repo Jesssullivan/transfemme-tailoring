@@ -76,15 +76,20 @@ def heuristic_role() -> tuple[str, list[str]]:
     has_gnucash = any(ROOT.glob("*.gnucash"))
     has_ci_templates = (ROOT / ".github" / "actions").is_dir()
 
-    svelte_config = ROOT / "svelte.config.js"
-    if svelte_config.is_file():
-        body = svelte_config.read_text()
+    # SvelteKit 3 has no svelte.config.js: the scaffold selects its adapter in
+    # kit.adapter.js (imported by vite.config.ts). Older spokes still carry
+    # svelte.config.js, so both are read.
+    for adapter_file in ("kit.adapter.js", "svelte.config.js"):
+        adapter_config = ROOT / adapter_file
+        if not adapter_config.is_file():
+            continue
+        body = adapter_config.read_text()
         if "adapter-static" in body:
             has_static_spoke_signal = True
-            evidence.append("svelte.config.js uses adapter-static")
+            evidence.append(f"{adapter_file} uses adapter-static")
         if "adapter-node" in body:
             has_dynamic_signal = True
-            evidence.append("svelte.config.js uses adapter-node")
+            evidence.append(f"{adapter_file} uses adapter-node")
 
     if has_ap:
         evidence.append(".activitypub/ present")

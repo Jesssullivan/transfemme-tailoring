@@ -13,9 +13,12 @@ is the short overlay of gotchas.
 - **Skeleton 5.0.1 is pinned exact** (RP1, TIN-5694). The Skeleton 4
   Tailwind-v4 compat shim and `vite-plugin-skeleton-colors` are deleted and stay
   deleted.
-- **Bazel BCR is the dependency SSOT.** `@tummycrypt/*` npm entries are
-  exact-pinned compatibility edges (`just inhouse-package-parity`) — never loosen
-  them or "drop to public npm."
+- **Bazel registry is the dependency SSOT.** `@tummycrypt/*` packages come only
+  from `bazel_dep` + `npm_link_package` (RU9); package.json has no specifier for
+  them (`just inhouse-package-parity`). Never "drop to public npm."
+- **Stack**: SvelteKit 3.0.1 + TypeScript 7.0.2 (`svelte-check --tsgo`). No
+  `svelte.config.js`, no `$lib` (use `#lib/...`), no `base` (use `resolve()`).
+  `patches/` comes from site.scaffold (RU13); see AGENTS.md "Stack".
 - **Content**: `README.md` is the source-of-record; articles live in
   `src/routes/<topic>/+page.svelte`; fitting math in
   `src/lib/components/*Calculator.svelte` (Svelte 5 runes).

@@ -4,9 +4,9 @@
 	// distances for a double-pointed contour (fish-eye) dart on a garment with no
 	// waist seam. Securing: sew off the fold to nothing and HAND-TIE the tails —
 	// never backtack or pivot-lock a dart tip (it dimples the line permanently).
-	import { round1, fmt } from '$lib/calc/format';
-	import { measurements } from '$lib/calc/measurements.svelte';
-	import Glyph from '$lib/components/Glyph.svelte';
+	import { round1, fmt } from '#lib/calc/format.js';
+	import { measurements } from '#lib/calc/measurements.svelte.js';
+	import Glyph from '#lib/components/Glyph.svelte';
 
 	let dartIntakeTotal = $state(6); // total removed in darts (from the Distributor)
 	let nDarts = $state(2);

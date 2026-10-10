@@ -1,15 +1,97 @@
 """
 Root BUILD.bazel for transfemme-tailoring.
 
-The SvelteKit static site still has ergonomic pnpm-backed Justfile recipes, but
-Bazel owns finite graphable targets for Flywheel cache/RBE proof surfaces.
+Just is the operator entrypoint; these finite Bazel targets own the build,
+type check, unit tests, lint and the dev server. The shape follows the
+site.scaffold reference (U1, RU1/RU9/RU13): one declared app workspace,
+SvelteKit 3 `svelte-kit sync` types as a declared output, and the in-house
+@tummycrypt/* packages linked from their xoxd-ai/bazel-registry modules.
 """
 
+load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
 load("@aspect_rules_js//js:defs.bzl", "js_binary", "js_run_binary", "js_test")
+load("@aspect_rules_js//npm:defs.bzl", "npm_link_package")
 load("@npm//:defs.bzl", "npm_link_all_packages")
-load("@npm//:vitest/package_json.bzl", vitest = "bin")
+load("@npm//:eslint/package_json.bzl", eslint_bin = "bin")
+load("@npm//:prettier/package_json.bzl", prettier_bin = "bin")
 
 npm_link_all_packages(name = "node_modules")
+
+# =============================================================================
+# RU9: Bazel-only ingestion of the first-party @tummycrypt/* packages.
+#
+# Each package is linked from its xoxd-ai/bazel-registry module `pkg` target,
+# not resolved as an npm specifier. package.json does not carry them, so pnpm
+# cannot supply them; MODULE.bazel pins the versions with bazel_dep and
+# `just inhouse-package-parity` asserts the bazel_dep + npm_link_package pair.
+# =============================================================================
+npm_link_package(
+    name = "node_modules/@tummycrypt/vite-plugin-a11y",
+    src = "@tummycrypt_vite_plugin_a11y//:pkg",
+)
+
+npm_link_package(
+    name = "node_modules/@tummycrypt/tinyland-color-utils",
+    src = "@tummycrypt_tinyland_color_utils//:pkg",
+)
+
+npm_link_package(
+    name = "node_modules/@tummycrypt/tinyvectors",
+    src = "@tummycrypt_tinyvectors//:pkg",
+)
+
+TINYLAND_HOUSE_PACKAGES = [
+    ":node_modules/@tummycrypt/vite-plugin-a11y",
+    ":node_modules/@tummycrypt/tinyland-color-utils",
+    ":node_modules/@tummycrypt/tinyvectors",
+]
+
+APP_NPM_PACKAGES = [
+    ":node_modules/@fontsource/inter",
+    ":node_modules/@lucide/svelte",
+    ":node_modules/@skeletonlabs/skeleton",
+    ":node_modules/@skeletonlabs/skeleton-svelte",
+    ":node_modules/@sveltejs/adapter-static",
+    ":node_modules/@sveltejs/kit",
+    ":node_modules/@sveltejs/vite-plugin-svelte",
+    ":node_modules/@tailwindcss/vite",
+    ":node_modules/@types/node",
+    ":node_modules/effect",
+    # The registry tummycrypt_vite_plugin_a11y 0.3.0 `:pkg` carries no
+    # dependency links, so its runtime import of magic-string resolves from
+    # the app's own node_modules (site.scaffold wiring).
+    ":node_modules/magic-string",
+    ":node_modules/svelte",
+    ":node_modules/tailwindcss",
+    ":node_modules/typescript",
+    ":node_modules/vite",
+] + TINYLAND_HOUSE_PACKAGES
+
+LINT_NPM_PACKAGES = [
+    ":node_modules/@eslint/js",
+    ":node_modules/eslint",
+    ":node_modules/eslint-config-prettier",
+    ":node_modules/eslint-plugin-svelte",
+    ":node_modules/globals",
+    ":node_modules/prettier",
+    ":node_modules/prettier-plugin-svelte",
+    ":node_modules/svelte",
+    ":node_modules/typescript",
+    ":node_modules/typescript-eslint",
+]
+
+# tsconfig.json includes playwright.config.ts and e2e/, so the type check
+# needs @playwright/test's declarations in its runfiles.
+TYPECHECK_NPM_PACKAGES = APP_NPM_PACKAGES + [
+    ":node_modules/@playwright/test",
+    ":node_modules/svelte-check",
+    ":node_modules/vitest",
+]
+
+UNIT_TEST_NPM_PACKAGES = APP_NPM_PACKAGES + [
+    ":node_modules/@vitest/coverage-v8",
+    ":node_modules/vitest",
+]
 
 filegroup(
     name = "app_srcs",
@@ -17,17 +99,26 @@ filegroup(
         [
             "src/**",
             "static/**",
+            "e2e/**",
             "scripts/**/*.mts",
             "scripts/bazel/**/*.mjs",
+            # The /agent route's `prerender` remote function reads these at
+            # build time (src/routes/agent/skills.remote.ts).
+            ".agents/skills/*/SKILL.md",
+            # RU13 patch set (site.scaffold patches/).
+            "patches/*.patch",
         ],
         allow_empty = True,
     ) + [
         ".npmrc",
+        ".pnpmfile.cjs",
+        # SvelteKit 3 adapter selection, imported by vite.config.ts (the
+        # former svelte.config.js `kit.adapter`).
+        "kit.adapter.js",
         "package.json",
         "playwright.config.ts",
         "pnpm-lock.yaml",
         "pnpm-workspace.yaml",
-        "svelte.config.js",
         "tsconfig.json",
         "vite.config.ts",
         "vitest.config.ts",
@@ -39,84 +130,220 @@ filegroup(
     srcs = glob(["e2e/**"], allow_empty = True),
 )
 
+# Mirror the repo-wide Prettier surface (subject to .prettierignore) inside the
+# finite Bazel test sandbox.
+filegroup(
+    name = "format_srcs",
+    srcs = glob(
+        [
+            ".github/**/*.json",
+            ".github/**/*.yaml",
+            ".github/**/*.yml",
+            "docs/**/*.json",
+            "e2e/**/*.ts",
+            "scripts/**/*.mjs",
+            "scripts/**/*.mts",
+            "src/**/*.css",
+            "src/**/*.html",
+            "src/**/*.svelte",
+            "src/**/*.ts",
+        ],
+        allow_empty = True,
+    ) + [
+        ".prettierignore",
+        ".prettierrc",
+        "eslint.config.ts",
+        "kit.adapter.js",
+        "package.json",
+        "playwright.config.ts",
+        "pnpm-workspace.yaml",
+        "tinyland.repo.json",
+        "tsconfig.json",
+        "vite.config.ts",
+        "vitest.config.ts",
+    ],
+)
+
 js_binary(
     name = "sveltekit_sync_bin",
-    data = [":node_modules"],
+    data = APP_NPM_PACKAGES,
     entry_point = "scripts/bazel/run-sveltekit-sync.mjs",
 )
 
+# SvelteKit 3 `svelte-kit sync` writes the generated route types under
+# .svelte-kit and the project's parent tsconfig plus the `$app/types`
+# declarations under node_modules/$app (tsconfig.json extends
+# "$app/tsconfig"). Both trees are declared outputs.
 js_run_binary(
     name = "sveltekit_types",
     srcs = [":app_srcs"],
-    out_dirs = [".svelte-kit"],
-    tags = ["flywheel-eligible"],
+    out_dirs = [
+        ".svelte-kit",
+        "node_modules/$app",
+    ],
     tool = ":sveltekit_sync_bin",
+)
+
+# Sources and their extended tsconfig in one declared tree. Build and test
+# wrappers copy it into action-local scratch.
+copy_to_directory(
+    name = "app_workspace",
+    srcs = [
+        ":app_srcs",
+        ":sveltekit_types",
+        "MODULE.bazel",
+    ],
+    hardlink = "off",
+    root_paths = ["."],
 )
 
 js_binary(
     name = "svelte_check_bin",
-    data = [":node_modules"],
+    data = TYPECHECK_NPM_PACKAGES + ["scripts/bazel/prepare-sveltekit-types.mjs"],
+    entry_point = "scripts/bazel/run-svelte-check.mjs",
+    tags = [
+        "manual",
+        "no-remote-exec",
+    ],
+)
+
+# RU13: svelte-check runs in its TypeScript 7 native mode (`--tsgo`), so
+# TypeScript 7.0.2 checks every .svelte and .ts file the tsconfig includes.
+js_test(
+    name = "svelte_check_test",
+    timeout = "long",
+    args = [
+        "--workspace",
+        "$(rootpath :app_workspace)",
+    ],
+    data = [
+        ":app_workspace",
+        "scripts/bazel/prepare-sveltekit-types.mjs",
+    ] + TYPECHECK_NPM_PACKAGES,
+    entry_point = "scripts/bazel/run-svelte-check.mjs",
+    tags = ["flywheel-eligible"],
+)
+
+# Seeded-error canary for the gate above: under --tsgo a tsconfig that checks
+# nothing reports 0 errors (sveltejs/language-tools#3136).
+js_test(
+    name = "svelte_check_canary_test",
+    timeout = "long",
+    args = [
+        "--workspace",
+        "$(rootpath :app_workspace)",
+        "--canary",
+    ],
+    data = [
+        ":app_workspace",
+        "scripts/bazel/prepare-sveltekit-types.mjs",
+    ] + TYPECHECK_NPM_PACKAGES,
     entry_point = "scripts/bazel/run-svelte-check.mjs",
 )
 
-js_test(
-    name = "svelte_check_test",
+eslint_bin.eslint_test(
+    name = "eslint_test",
+    timeout = "moderate",
+    args = ["."],
     data = [
         ":app_srcs",
-        ":node_modules",
         ":sveltekit_types",
+        "eslint.config.ts",
+    ] + LINT_NPM_PACKAGES,
+)
+
+prettier_bin.prettier_test(
+    name = "prettier_check_test",
+    timeout = "moderate",
+    args = [
+        "--check",
+        ".",
     ],
-    entry_point = "scripts/bazel/run-svelte-check.mjs",
-    tags = ["flywheel-eligible"],
-    timeout = "long",
+    data = [
+        ":format_srcs",
+        ":node_modules/prettier",
+        ":node_modules/prettier-plugin-svelte",
+        ":node_modules/svelte",
+    ],
 )
 
 js_binary(
     name = "vite_build_bin",
-    data = [":node_modules"],
+    data = APP_NPM_PACKAGES + ["scripts/bazel/prepare-sveltekit-types.mjs"],
     entry_point = "scripts/bazel/run-vite-build.mjs",
 )
 
+# Static site build (adapter-static). Stamped: BASE_PATH and the commit come
+# from scripts/bazel/workspace-status.sh, so the GitHub Pages build
+# (BASE_PATH=/transfemme-tailoring) and the root-path local build are
+# distinct, reproducible actions.
 js_run_binary(
     name = "build",
-    srcs = [
-        ":app_srcs",
-        ":sveltekit_types",
+    srcs = [":app_workspace"],
+    args = [
+        "--workspace",
+        "$(rootpath :app_workspace)",
+        "--output-dir",
+        "build",
     ],
     out_dirs = ["build"],
     patch_node_fs = False,
-    tags = ["flywheel-eligible"],
+    stamp = 1,
+    tags = [
+        "flywheel-eligible",
+        "target-class=sveltekit-app-build",
+    ],
     tool = ":vite_build_bin",
     visibility = ["//visibility:public"],
 )
 
-vitest.vitest_test(
-    name = "unit_tests",
-    data = [
-        ":app_srcs",
-        ":node_modules",
-        ":node_modules/vitest",
-        "vitest.config.ts",
+js_binary(
+    name = "dev",
+    data = APP_NPM_PACKAGES,
+    entry_point = "scripts/bazel/run-vite-dev.mjs",
+    patch_node_fs = False,
+    tags = [
+        "manual",
+        "no-remote-exec",
     ],
+    visibility = ["//visibility:public"],
+)
+
+# vitest over src/**/*.test.ts in a scratch copy of the declared workspace.
+js_test(
+    name = "unit_tests",
     args = [
+        "--workspace",
+        "$(rootpath :app_workspace)",
         "run",
         "--reporter=verbose",
         "--config",
-        "$(rootpath vitest.config.ts)",
+        "vitest.config.ts",
     ],
+    data = [
+        ":app_workspace",
+        "scripts/bazel/prepare-sveltekit-types.mjs",
+    ] + UNIT_TEST_NPM_PACKAGES,
+    entry_point = "scripts/bazel/run-vitest.mjs",
     tags = [
         "flywheel-eligible",
+        "target-class=sveltekit-unit-tests",
         "vitest",
     ],
     visibility = ["//visibility:public"],
 )
 
+# Headless Chromium smoke over the built site: serves bazel-bin/build and
+# asserts the /agent route rendered its build-time skills list. Needs a
+# Chromium binary (PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH or GF_RBE_CHROMIUM_EXECUTABLE
+# via --test_env).
 js_test(
     name = "playwright_static_smoke",
+    timeout = "moderate",
     data = [
         ":build",
         ":e2e_srcs",
-        ":node_modules",
+        ":node_modules/@playwright/test",
         "scripts/bazel/run-playwright-static-smoke.mjs",
     ],
     entry_point = "scripts/bazel/run-playwright-static-smoke.mjs",
@@ -125,18 +352,23 @@ js_test(
         "playwright",
         "web-playwright-chromium-static-smoke",
     ],
-    timeout = "moderate",
     visibility = ["//visibility:public"],
 )
 
 test_suite(
-    name = "ci_validation_suite",
-    # A test_suite's tags are a positive FILTER over its members (both already
-    # carry flywheel-eligible), not metadata — so this keeps both and stays
-    # consistent under --config=flywheel-executor's tag filter. Do NOT add
-    # "manual" here: it would drop both members and resolve to zero targets.
-    tags = ["flywheel-eligible"],
+    name = "lint_suite",
     tests = [
+        ":eslint_test",
+        ":prettier_check_test",
+    ],
+)
+
+test_suite(
+    name = "ci_validation_suite",
+    tests = [
+        ":eslint_test",
+        ":prettier_check_test",
+        ":svelte_check_canary_test",
         ":svelte_check_test",
         ":unit_tests",
     ],
@@ -144,16 +376,15 @@ test_suite(
 
 exports_files(
     [
+        ".npmrc",
+        ".pnpmfile.cjs",
         "MODULE.bazel",
+        "kit.adapter.js",
         "package.json",
         "playwright.config.ts",
         "pnpm-lock.yaml",
         "pnpm-workspace.yaml",
         "scripts/bazel/run-playwright-static-smoke.mjs",
-        "scripts/bazel/run-svelte-check.mjs",
-        "scripts/bazel/run-sveltekit-sync.mjs",
-        "scripts/bazel/run-vite-build.mjs",
-        "svelte.config.js",
         "tsconfig.json",
         "vite.config.ts",
         "vitest.config.ts",

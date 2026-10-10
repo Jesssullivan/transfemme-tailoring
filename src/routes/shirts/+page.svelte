@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import WaistTakeInDistributor from '$lib/components/calc/WaistTakeInDistributor.svelte';
-	import DartBuilder from '$lib/components/calc/DartBuilder.svelte';
-	import TaperCalculator from '$lib/components/calc/TaperCalculator.svelte';
-	import SeamReserveCheck from '$lib/components/calc/SeamReserveCheck.svelte';
+	import { resolve } from '$app/paths';
+	import WaistTakeInDistributor from '#lib/components/calc/WaistTakeInDistributor.svelte';
+	import DartBuilder from '#lib/components/calc/DartBuilder.svelte';
+	import TaperCalculator from '#lib/components/calc/TaperCalculator.svelte';
+	import SeamReserveCheck from '#lib/components/calc/SeamReserveCheck.svelte';
 </script>
 
 <svelte:head>
@@ -34,7 +34,7 @@
 	<h2 id="tools">Assemble the tools</h2>
 	<p>
 		Fine 0.5&nbsp;mm glass-head pins (<em>not</em> the 2″ T-pins — they leave holes in shirting), tailor's chalk, snips,
-		and a <a href="{base}/tools">ham + press cloth</a> for the darts. A sleeve board helps but is optional.
+		and a <a href={resolve('/tools')}>ham + press cloth</a> for the darts. A sleeve board helps but is optional.
 	</p>
 
 	<h2 id="steps">The stepwise guide</h2>
@@ -90,7 +90,7 @@
 
 	<hr />
 	<p class="text-sm">
-		More guides: <a href="{base}/pants">pants</a>, <a href="{base}/vests">vests</a>,
-		<a href="{base}/coats">coats</a> · the <a href="{base}/fitting">fitting theory</a>.
+		More guides: <a href={resolve('/pants')}>pants</a>, <a href={resolve('/vests')}>vests</a>,
+		<a href={resolve('/coats')}>coats</a> · the <a href={resolve('/fitting')}>fitting theory</a>.
 	</p>
 </main>

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import WaistTakeInDistributor from '$lib/components/calc/WaistTakeInDistributor.svelte';
-	import DartBuilder from '$lib/components/calc/DartBuilder.svelte';
-	import SeamReserveCheck from '$lib/components/calc/SeamReserveCheck.svelte';
+	import { resolve } from '$app/paths';
+	import WaistTakeInDistributor from '#lib/components/calc/WaistTakeInDistributor.svelte';
+	import DartBuilder from '#lib/components/calc/DartBuilder.svelte';
+	import SeamReserveCheck from '#lib/components/calc/SeamReserveCheck.svelte';
 </script>
 
 <svelte:head>
@@ -23,16 +23,16 @@
 
 	<h2 id="machine">Set up the machine</h2>
 	<p>
-		Straight stitch ~2.5–3&nbsp;mm for wool on the 6600C (or the <a href="{base}/machine">treadle</a>, whose straight
-		seam this suits perfectly). Lock straight seam ends as usual — but always stitch a
+		Straight stitch ~2.5–3&nbsp;mm for wool on the 6600C (or the <a href={resolve('/machine')}>treadle</a>, whose
+		straight seam this suits perfectly). Lock straight seam ends as usual — but always stitch a
 		<strong>dart tip off to nothing and hand-tie it</strong>, never backtack, or you'll dimple the front.
 	</p>
 
 	<h2 id="tools">Assemble the tools</h2>
 	<p>
-		Shears, seam rippers, a <a href="{base}/tools">ham, clapper and press cloth</a>, and a fray-resist edge plan for raw
-		worsted: pinking <em>shears</em> or a pinking-<em>blade</em> rotary head, or a hand overcast or Hong-Kong bind. (A plain
-		straight rotary blade does not pink — it leaves a straight edge that still frays.)
+		Shears, seam rippers, a <a href={resolve('/tools')}>ham, clapper and press cloth</a>, and a fray-resist edge plan
+		for raw worsted: pinking <em>shears</em> or a pinking-<em>blade</em> rotary head, or a hand overcast or Hong-Kong bind.
+		(A plain straight rotary blade does not pink — it leaves a straight edge that still frays.)
 	</p>
 
 	<h2 id="steps">The stepwise guide</h2>
@@ -83,7 +83,7 @@
 
 	<hr />
 	<p class="text-sm">
-		More guides: <a href="{base}/pants">pants</a>, <a href="{base}/shirts">shirts</a>,
-		<a href="{base}/coats">coats</a> · the <a href="{base}/fitting">fitting theory</a>.
+		More guides: <a href={resolve('/pants')}>pants</a>, <a href={resolve('/shirts')}>shirts</a>,
+		<a href={resolve('/coats')}>coats</a> · the <a href={resolve('/fitting')}>fitting theory</a>.
 	</p>
 </main>

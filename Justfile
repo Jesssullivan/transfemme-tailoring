@@ -17,37 +17,73 @@ _default:
 # Development
 # ─────────────────────────────────────────────
 
-# Install dependencies (frozen lockfile)
+# Install third-party dependencies from the frozen lockfile, then link the
+# Bazel-only in-house packages and the SvelteKit types into the checkout.
 setup:
     cd {{ root }} && pnpm install --frozen-lockfile
+    just deps-graph
+    just workspace-types
     @echo "Setup complete. Run 'just dev' to start."
 
-# Start the Vite dev server
-dev:
-    cd {{ root }} && pnpm run dev
+# Refresh the frozen third-party graph after package.json edits.
+deps-lock:
+    cd {{ root }} && pnpm install --lockfile-only
+
+# Refresh the Bzlmod lock after an intentional MODULE.bazel or registry edit.
+bazel-lock:
+    cd {{ root }} && bazelisk mod deps --lockfile_mode=update
+
+# Materialize the Bazel-linked in-house packages (RU9) into node_modules for
+# live Vite, Playwright and editor use. package.json does not carry them.
+deps-graph:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd {{ root }}
+    mapfile -t graph_packages < <(bazelisk query 'filter("^//:node_modules/@tummycrypt/[^/]+$", //:*)' --output=label)
+    (( ${#graph_packages[@]} > 0 ))
+    bazelisk build "${graph_packages[@]}"
+    for graph_package in "${graph_packages[@]}"; do
+        package_path="${graph_package#//:}"
+        mkdir -p "$(dirname "$package_path")"
+        ln -sfn "$(realpath "bazel-bin/$package_path")" "$package_path"
+    done
+
+# Materialize `svelte-kit sync` output (.svelte-kit and node_modules/$app,
+# which tsconfig.json extends) from //:sveltekit_types.
+workspace-types:
+    cd {{ root }} && bazelisk build //:sveltekit_types
+    cd {{ root }} && python3 scripts/bazel_output.py materialize --source bazel-bin/.svelte-kit --destination .svelte-kit --required-path types/route_meta_data.json
+    cd {{ root }} && python3 scripts/bazel_output.py materialize --source 'bazel-bin/node_modules/$app' --destination 'node_modules/$app' --required-path tsconfig.json
+
+# Start the Vite dev server through the Bazel graph
+dev port="5173": deps-graph workspace-types
+    cd {{ root }} && bazelisk run //:dev -- --port {{ quote(port) }} --strictPort
 
 # Start the dev server and open browser
-dev-open:
-    cd {{ root }} && pnpm run dev -- --open
+dev-open: deps-graph workspace-types
+    cd {{ root }} && bazelisk run //:dev -- --open
 
 # ─────────────────────────────────────────────
 # Build
 # ─────────────────────────────────────────────
 
-# Production static build (adapter-static -> build/)
+# Production static build: //:build (adapter-static), materialized to build/.
+# BASE_PATH (GitHub Pages: /transfemme-tailoring) reaches the stamped action
+# through scripts/bazel/workspace-status.sh.
 build:
-    cd {{ root }} && pnpm run build
+    cd {{ root }} && bazelisk build //:build
+    cd {{ root }} && python3 scripts/bazel_output.py materialize --source bazel-bin/build --destination build
 
 # Clean then build
 rebuild: clean build
 
 # Preview the built site
-preview: build
-    cd {{ root }} && pnpm run preview
+preview port="4173": build
+    cd {{ root }} && python3 scripts/bazel_output.py preview --port {{ port }}
 
 # Preview without rebuilding
-preview-only:
-    cd {{ root }} && pnpm run preview
+preview-only port="4173":
+    cd {{ root }} && python3 scripts/bazel_output.py preview --port {{ port }}
 
 # Remove build artifacts
 clean:
@@ -61,21 +97,21 @@ clean-all: clean
 # Validation
 # ─────────────────────────────────────────────
 
-# svelte-check + tsc (delegates to package.json `check`)
+# svelte-check --tsgo (TypeScript 7.0.2, RU13) plus its seeded-error canary
 typecheck:
-    cd {{ root }} && pnpm run check
+    cd {{ root }} && bazelisk test //:svelte_check_test //:svelte_check_canary_test
 
-# ESLint flat config across the repo
+# Prettier check + ESLint through bounded Bazel tests
 lint:
-    cd {{ root }} && pnpm run lint
+    cd {{ root }} && bazelisk test //:lint_suite
 
 # Prettier write
 format:
-    cd {{ root }} && pnpm run format
+    cd {{ root }} && pnpm exec prettier --write .
 
 # Prettier check (no writes)
 format-check:
-    cd {{ root }} && pnpm run format:check
+    cd {{ root }} && bazelisk test //:prettier_check_test
 
 # Gitleaks scan of working tree files
 secrets-scan-dir:
@@ -87,7 +123,7 @@ secrets-scan:
 
 # Run Vitest unit tests
 test-unit:
-    cd {{ root }} && pnpm run test:unit
+    cd {{ root }} && bazelisk test //:unit_tests
 
 # Ensure local Playwright browser cache exists; CI uses Nix Chromium instead
 playwright-ensure:
@@ -100,9 +136,9 @@ playwright-ensure:
 # Run Playwright E2E tests
 test-e2e: playwright-ensure
     cd {{ root }} && if [ "${CI:-}" = "true" ] && command -v nix >/dev/null 2>&1; then \
-      nix develop .#playwright --command pnpm run test:e2e; \
+      nix develop .#playwright --command pnpm exec playwright test; \
     else \
-      pnpm run test:e2e; \
+      pnpm exec playwright test; \
     fi
 
 # Install Playwright browser binaries
@@ -220,7 +256,8 @@ scaffold-doctor:
 conformance:
     cd {{ root }} && bash scripts/check-conformance.sh
 
-# Verify @tummycrypt/@tinyland npm package versions match MODULE.bazel.
+# Verify the in-house packages are Bazel-only: bazel_dep + npm_link_package,
+# no npm specifier, and resolution from the pinned registry commit (RU9).
 inhouse-package-parity:
     cd {{ root }} && python3 scripts/check-inhouse-package-parity.py
 
@@ -352,13 +389,8 @@ tofu-validate:
 # Utilities
 # ─────────────────────────────────────────────
 
-# Sync SvelteKit types
-sync:
-    cd {{ root }} && pnpm exec svelte-kit sync
-
-# Build with bundle analyzer
-analyze:
-    cd {{ root }} && BUILD_ANALYZE=true pnpm run build
+# Sync SvelteKit types into the checkout (from the Bazel graph)
+sync: workspace-types
 
 # Bazel --output_user_root for the two recipes below (lab TIN-4631), in order:
 # BAZEL_OUTPUT_USER_ROOT when set; no flag when ~/.bazelrc already declares

@@ -1,7 +1,12 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { prerender } from '$app/server';
 
-export const prerender = true;
+// RU3 (remote functions are the estate pattern): the agent route's server data
+// is a `prerender` remote function instead of a `+page.server.ts` load. It runs
+// at build time on the server side only, its result is serialized into the
+// static output, and adapter-static serves it without a runtime. A dynamic
+// spoke (adapter-node) can turn the same function into a `query`.
 
 type SkillFrontmatter = {
 	name: string;
@@ -10,7 +15,7 @@ type SkillFrontmatter = {
 	argument_hint?: string;
 };
 
-type SkillEntry = SkillFrontmatter & {
+export type SkillEntry = SkillFrontmatter & {
 	href: string;
 	body_preview: string;
 };
@@ -82,7 +87,4 @@ async function loadSkills(): Promise<SkillEntry[]> {
 	return skills;
 }
 
-export async function load() {
-	const skills = await loadSkills();
-	return { skills };
-}
+export const getSkills = prerender(async () => loadSkills());

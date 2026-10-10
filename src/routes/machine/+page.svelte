@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 </script>
 
 <svelte:head>
@@ -195,9 +195,9 @@
 
 	<hr />
 	<p class="text-sm">
-		Next: <a href="{base}/tools">assemble the tools</a> · the
-		<a href="{base}/fitting">fitting theory &amp; calculators</a>, then the garment guides for
-		<a href="{base}/pants">pants</a>, <a href="{base}/shirts">shirts</a>,
-		<a href="{base}/vests">vests</a> and <a href="{base}/coats">coats</a>.
+		Next: <a href={resolve('/tools')}>assemble the tools</a> · the
+		<a href={resolve('/fitting')}>fitting theory &amp; calculators</a>, then the garment guides for
+		<a href={resolve('/pants')}>pants</a>, <a href={resolve('/shirts')}>shirts</a>,
+		<a href={resolve('/vests')}>vests</a> and <a href={resolve('/coats')}>coats</a>.
 	</p>
 </main>

@@ -26,10 +26,12 @@ runes; mirror the tinyland-goo `*Scaler.svelte` convention).
   Justfile unless adding a recipe.
 - **Shell**: `nix develop` (auto-loaded by `direnv`). CI runs
   `nix develop --command just <recipe>` so CI matches local exactly.
-- **Build**: `just build` → `pnpm run build` (SvelteKit **adapter-static**) →
-  static `build/`. `BASE_PATH=/transfemme-tailoring` sets the GitHub Pages project
-  base; unset locally builds at root.
-- **Check**: `just check` (gitleaks + prettier/eslint + svelte-check + vitest).
+- **Build**: `just build` → Bazel `//:build` (SvelteKit **adapter-static**),
+  materialized to static `build/`. `BASE_PATH=/transfemme-tailoring` sets the
+  GitHub Pages project base (stamped into the action by
+  `scripts/bazel/workspace-status.sh`); unset locally builds at root.
+- **Check**: `just check` (gitleaks + Bazel `//:lint_suite`, `//:svelte_check_test`
+  with its canary, and `//:unit_tests`).
   `just conformance` runs the static-spoke checklist; `just scaffold-doctor`
   audits drift.
 - **Secrets**: `just secrets-scan-dir` (tree) / `just secrets-scan` (history),
@@ -39,7 +41,8 @@ runes; mirror the tinyland-goo `*Scaler.svelte` convention).
 
 Deploys via `.github/workflows/deploy-pages.yml` (`actions/deploy-pages` on
 `build/`), building through the Nix devshell + `just` so CI == local.
-`svelte.config.js` reads `process.env.BASE_PATH`; `static/.nojekyll` is required
+`vite.config.ts` (the `sveltekit()` plugin options; SvelteKit 3 has no
+`svelte.config.js`) reads `process.env.BASE_PATH`; `static/.nojekyll` is required
 so `_app/` assets are served; there is no `static/CNAME` (the Pages project path
 is the canonical URL).
 
@@ -47,6 +50,29 @@ is the canonical URL).
 *Cloudflare Pages* `deploy-pages.yml` and a `svelte.config.js` with `base: ''`
 (no `BASE_PATH`), both contradicting its own documented *"adapter-static → GitHub
 Pages is the house baseline."* This spoke implements the Option-A fix locally.
+
+## Stack (RU1/RU5, estate uplift 2026-10-08)
+
+- Exact pins: `@sveltejs/kit` 3.0.1, `svelte` 5.57.2, `vite` 8.3.3,
+  `typescript` 7.0.2, `effect` 4.0.2, Skeleton 5.0.1, `vitest` /
+  `@vitest/coverage-v8` 5.0.3, `@playwright/test` 1.64.0, `svelte-check` 4.7.6.
+  They move with the estate version manifest in `xoxd-ai/site.scaffold`, not per
+  spoke; Dependabot ignores them.
+- **SvelteKit 3**: config lives in the `sveltekit({...})` plugin in
+  `vite.config.ts`, the adapter in `kit.adapter.js`. `$lib` is gone: import
+  `#lib/...` (package.json `imports`; `.ts` modules with a `.js` suffix).
+  `$app/paths` has no `base`: link with `resolve('/route')`. Use `$app/env`
+  (not `$app/environment`).
+- **TypeScript 7** is the project's `typescript`; type checking is
+  `svelte-check --tsgo`. Tools that still need TypeScript's in-process API get
+  Microsoft's `@typescript/typescript6` companion through `.pnpmfile.cjs` and the
+  Kit patch. `patches/` is copied from `site.scaffold` (RU13 patch home); do not
+  write local patches, report new ones to the scaffold. Export shared types from
+  `.ts` modules, not from a component's `<script module>` (TS 7 resolves `#lib`
+  `.svelte` imports to the ambient `*.svelte` declaration).
+- **Remote functions (RU3)**: the `/agent` skills list is a `prerender` remote
+  function (`src/routes/agent/skills.remote.ts`), read at build time. There are no
+  forms and no runtime server data; a future form uses remote `form()`.
 
 ## Theme & Skeleton
 
@@ -63,15 +89,19 @@ Pages is the house baseline."* This spoke implements the Option-A fix locally.
 
 ## Dependency SSOT — Bazel, not npm
 
-- The dependency source of truth is the **Bazel BCR / `tinyland-inc/bazel-registry`**
-  (via `bazel_dep` + `bazelisk mod graph`). In-house `@tummycrypt/*` packages
-  (`tinyvectors`, `tinyland-color-utils`, `vite-plugin-a11y`) are pulled as **Bazel modules**; their
-  `package.json` entries are **compatibility edges for pnpm/Vite only** and must
-  stay **exact-pinned to the matching `bazel_dep` version** (`just
-  inhouse-package-parity`). Never loosen them to caret ranges or "drop to public
-  npm" to simplify a build — the module graph is authoritative.
-- Bazel exists for **module-graph integrity proofs**; the canonical app build
-  stays `pnpm run build`. Cache-first remote build/test is now wired as the gated
+- The dependency source of truth is **`xoxd-ai/bazel-registry`** (formerly
+  `tinyland-inc`), pinned to an immutable commit in `.bazelrc`, then BCR. In-house
+  `@tummycrypt/*` packages (`tinyvectors`, `tinyland-color-utils`,
+  `vite-plugin-a11y`) come **only** from their Bazel modules (RU9): `bazel_dep` in
+  `MODULE.bazel` plus `npm_link_package` in `BUILD.bazel`. `package.json` carries
+  **no** `@tummycrypt/*` specifier, so pnpm cannot supply them; `just setup`
+  (`just deps-graph`) links the Bazel-built packages into `node_modules` for
+  editors and Playwright. `just inhouse-package-parity` asserts the pairing and
+  the pinned-registry resolution. Never add them back as npm deps.
+- Bazel owns the app: `//:build`, `//:svelte_check_test` (+ canary),
+  `//:eslint_test`, `//:prettier_check_test`, `//:unit_tests`, `//:dev` and
+  `//:playwright_static_smoke`. Third-party deps come from the one pnpm lockfile
+  through `npm_translate_lock`. Cache-first remote build/test is now wired as the gated
   `flywheel` CI job (`just flywheel-build` / `just flywheel-test`); it activates
   once `BAZEL_REMOTE_CACHE` + `FLYWHEEL_ENABLED` are set, still fail-fast and
   read-only on PRs by design.
@@ -110,7 +140,7 @@ conformance, never wired live):
 - Don't call `pnpm` / `vite` / `bazelisk` outside the Justfile (add a recipe).
 - Don't add runtime/server code, secrets, or vendor credentials — this is static.
 - Don't restore the Skeleton 4 compat shim, and don't remove `static/.nojekyll`.
-- Don't unpin Skeleton (5.0.1 exact) or Tailwind, or loosen the `@tummycrypt/*` exact pins.
+- Don't unpin Skeleton (5.0.1 exact), the RU5 framework pins or Tailwind, and don't add `@tummycrypt/*` npm specifiers back.
 - Don't wire the dormant org surfaces (tofu / Blahaj / pulse) on this personal spoke.
 - Don't introduce raw `--remote_cache=` / `--remote_executor=` endpoints (the
   Flywheel wrapper contract is endpoint-free).
