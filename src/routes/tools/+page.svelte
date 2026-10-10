@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 </script>
 
 <svelte:head>
@@ -19,7 +19,7 @@
 		>
 		tool for fine formalwear, and a glaring gap where the pressing equipment should be. Pressing is roughly half of tailoring,
 		so the iron is the priority purchase, not more notions. The short, shareable version of the gap list lives on the
-		<a href="{base}/wants">wants page</a>.
+		<a href={resolve('/wants')}>wants page</a>.
 	</p>
 
 	<h2 id="owned">What I own</h2>
@@ -46,7 +46,8 @@
 				<tr class="border-surface-300 dark:border-surface-700 border-t">
 					<td class="py-1 pr-3 font-medium">Treadle Singer (in restoration)</td>
 					<td class="py-1"
-						>Straight lockstitch only — not yet running. See the <a href="{base}/machine#treadle">restoration log</a
+						>Straight lockstitch only — not yet running. See the <a href={resolve('/machine#treadle')}
+							>restoration log</a
 						>.</td
 					>
 				</tr>
@@ -168,8 +169,8 @@
 
 	<hr />
 	<p class="text-sm">
-		Next: the <a href="{base}/fitting">fitting theory &amp; calculators</a>, or jump to a garment —
-		<a href="{base}/pants">pants</a>, <a href="{base}/shirts">shirts</a>,
-		<a href="{base}/vests">vests</a>, <a href="{base}/coats">coats</a>.
+		Next: the <a href={resolve('/fitting')}>fitting theory &amp; calculators</a>, or jump to a garment —
+		<a href={resolve('/pants')}>pants</a>, <a href={resolve('/shirts')}>shirts</a>,
+		<a href={resolve('/vests')}>vests</a>, <a href={resolve('/coats')}>coats</a>.
 	</p>
 </main>

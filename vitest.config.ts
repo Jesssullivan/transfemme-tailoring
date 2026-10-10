@@ -1,15 +1,10 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
+// `#lib/*` resolves through package.json `imports` (SvelteKit 3 replaced the
+// generated `$lib` alias with Node subpath imports), so the unit suite needs
+// no alias of its own. //:unit_tests runs this config in a scratch copy of the
+// declared app workspace (scripts/bazel/run-vitest.mjs).
 export default defineConfig({
-	resolve: {
-		alias: {
-			$lib: path.resolve(__dirname, 'src/lib'),
-		},
-	},
 	test: {
 		include: ['src/**/*.test.ts', 'src/**/*.test.svelte.ts', 'scripts/**/*.test.mts'],
 		environment: 'node',

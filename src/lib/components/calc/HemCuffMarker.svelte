@@ -3,9 +3,9 @@
 	// a plain blind hem or a turn-up cuff, on trousers or sleeves. The invisible
 	// hem itself is hand-sewn (slip/catch-stitch); the fold/cut math is the same.
 	// Top reference = waist for trousers, shoulder for sleeves.
-	import { round1, fmt } from '$lib/calc/format';
-	import { measurements } from '$lib/calc/measurements.svelte';
-	import Glyph from '$lib/components/Glyph.svelte';
+	import { round1, fmt } from '#lib/calc/format.js';
+	import { measurements } from '#lib/calc/measurements.svelte.js';
+	import Glyph from '#lib/components/Glyph.svelte';
 
 	let Lcurrent = $state(108); // current finished length from the top reference
 	let Ltarget = $state(102); // desired finished length

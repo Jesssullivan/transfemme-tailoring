@@ -5,9 +5,9 @@
 	// athletic build, set the upper target ≈ the upper current so the upper
 	// offset stays ~0: the slim comes from the lower leg / wrist, never from
 	// strangling the quad or the flexed bicep.
-	import { round1, fmt } from '$lib/calc/format';
-	import { measurements } from '$lib/calc/measurements.svelte';
-	import Glyph from '$lib/components/Glyph.svelte';
+	import { round1, fmt } from '#lib/calc/format.js';
+	import { measurements } from '#lib/calc/measurements.svelte.js';
+	import Glyph from '#lib/components/Glyph.svelte';
 
 	let upperCurrent = $state(40); // garment circ at the upper point (bicep / thigh)
 	let upperTarget = $state(40); // target finished circ at the upper point (body flexed + ease)

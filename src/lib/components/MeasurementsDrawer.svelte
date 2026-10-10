@@ -2,11 +2,11 @@
 	// Pull-up "My measurements" drawer — the handful of body numbers you reach
 	// for mid-alteration, reachable from any page. Reads/writes the shared
 	// measurements store (the full editor lives at /measurements).
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 	import { Dialog } from '@skeletonlabs/skeleton-svelte';
 	import { Ruler, X } from '@lucide/svelte';
-	import { measurements, type BodyProfile } from '$lib/calc/measurements.svelte';
-	import Glyph from '$lib/components/Glyph.svelte';
+	import { measurements, type BodyProfile } from '#lib/calc/measurements.svelte.js';
+	import Glyph from '#lib/components/Glyph.svelte';
 
 	let open = $state(false);
 
@@ -66,7 +66,7 @@
 						</span>
 					</label>
 				{/each}
-				<a href="{base}/measurements" class="text-primary-500 hover:underline" onclick={() => (open = false)}>
+				<a href={resolve('/measurements')} class="text-primary-500 hover:underline" onclick={() => (open = false)}>
 					Full measurement profile →
 				</a>
 				<p class="text-surface-500 flex items-center gap-1.5 text-xs">

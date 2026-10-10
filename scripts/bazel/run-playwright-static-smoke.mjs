@@ -5,13 +5,13 @@ import { extname, join, normalize, resolve, sep } from 'node:path';
 import { chromium } from '@playwright/test';
 
 const buildDir = resolve('build');
-const chromiumRuntimeDir = mkdtempSync(join(tmpdir(), 'site-scaffold-playwright-'));
+const chromiumRuntimeDir = mkdtempSync(join(tmpdir(), 'transfemme-tailoring-playwright-'));
 ensureWritableEnvDir('HOME', join(chromiumRuntimeDir, 'home'));
 ensureWritableEnvDir('XDG_CONFIG_HOME', join(chromiumRuntimeDir, 'xdg-config'));
 ensureWritableEnvDir('XDG_CACHE_HOME', join(chromiumRuntimeDir, 'xdg-cache'));
 
 if (!existsSync(join(buildDir, 'index.html'))) {
-	console.error('site.scaffold Playwright smoke requires build/index.html');
+	console.error('transfemme-tailoring Playwright smoke requires build/index.html');
 	process.exit(1);
 }
 
@@ -54,13 +54,13 @@ try {
 	await page.goto(`${baseURL}/agent`, { waitUntil: 'networkidle' });
 	const text = normalizeWhitespace((await page.locator('body').textContent()) || '');
 
-	for (const term of ['site.scaffold traversal map', 'tinyland-flywheel-bazel', 'just flywheel-test']) {
+	for (const term of ['transfemme-tailoring traversal map', 'tinyland-flywheel-bazel', 'just flywheel-test']) {
 		if (!text.includes(term)) {
 			throw new Error(`agent route did not render expected content: ${term}`);
 		}
 	}
 
-	console.log(`site.scaffold Playwright static smoke passed with ${chromiumPath}`);
+	console.log(`transfemme-tailoring Playwright static smoke passed with ${chromiumPath}`);
 } finally {
 	await browser?.close();
 	await new Promise((resolveClose) => server.close(resolveClose));

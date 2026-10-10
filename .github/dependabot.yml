@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'monthly'
+      interval: 'weekly'
     target-branch: 'main'
     open-pull-requests-limit: 3
     ignore:
@@ -14,11 +14,26 @@ updates:
       - dependency-name: 'eslint'
         update-types:
           - 'version-update:semver-major'
+      - dependency-name: '@eslint/js'
+        update-types:
+          - 'version-update:semver-major'
       - dependency-name: '@types/node'
         update-types:
           - 'version-update:semver-major'
-      # In-house deps come from the Bazel BCR (SSOT) and are exact-pinned to
-      # bazel_dep via inhouse-package-parity — never let Dependabot bump them.
+      # RU5: the framework and test-runner pins are exact and move with the
+      # estate version manifest (site.scaffold), not per spoke. The RU13 patch
+      # set is keyed to these exact versions.
+      - dependency-name: '@sveltejs/*'
+      - dependency-name: 'svelte'
+      - dependency-name: 'svelte-check'
+      - dependency-name: 'vite'
+      - dependency-name: 'vitest'
+      - dependency-name: '@vitest/*'
+      - dependency-name: '@playwright/test'
+      - dependency-name: 'effect'
+      - dependency-name: '@typescript/typescript6'
+      # In-house deps come only from the Bazel registry (RU9: bazel_dep +
+      # npm_link_package); package.json carries no @tummycrypt/* specifier.
       - dependency-name: '@tummycrypt/*'
       # Skeleton + Tailwind v4 are pinned exact until a coordinated migration.
       - dependency-name: '@skeletonlabs/*'
@@ -32,7 +47,7 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'monthly'
+      interval: 'weekly'
     target-branch: 'main'
     open-pull-requests-limit: 2
     groups:

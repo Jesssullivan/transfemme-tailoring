@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 </script>
 
 <svelte:head>
@@ -16,7 +16,7 @@
 	<p>
 		The short, shareable version of the gap list — what would actually move this project forward, in priority order. The
 		full reasoning (and the honest inventory it comes from) lives in
-		<a href="{base}/tools">Tools &amp; BOM</a>.
+		<a href={resolve('/tools')}>Tools &amp; BOM</a>.
 	</p>
 
 	<h2 id="pressing">First: the pressing kit — the real gap</h2>
@@ -66,7 +66,7 @@
 		</li>
 		<li>
 			<strong>Needles:</strong> hand sharps/milliners/betweens + a curved needle; machine Universal, Microtex, Jeans and
-			Ballpoint sizes per the <a href="{base}/tools#consumables">BOM</a>.
+			Ballpoint sizes per the <a href={resolve('/tools#consumables')}>BOM</a>.
 		</li>
 		<li>
 			<strong>Structure:</strong> twill/fusible stay tape, fusible weft/tricot, a little sew-in hair canvas, beeswax.
@@ -80,16 +80,17 @@
 	<h2 id="covered">Already covered — please don't double-buy</h2>
 	<p>
 		The working machine (SINGER 6600C), the ProSeries shear bundle, the seam-ripper set, a rotary cutter + self-healing
-		mat, and machine oil are all <a href="{base}/tools#owned">owned and documented</a>. Two owned items are honest
+		mat, and machine oil are all <a href={resolve('/tools#owned')}>owned and documented</a>. Two owned items are honest
 		mismatches kept for other jobs — bonded-nylon upholstery thread and 2″ T-pins — so fine thread and fine pins above
 		are still real wants, not duplicates. Details in
-		<a href="{base}/tools#mismatched">the mismatch list</a>.
+		<a href={resolve('/tools#mismatched')}>the mismatch list</a>.
 	</p>
 
 	<hr />
 	<p class="text-sm">
-		Back to the full <a href="{base}/tools">Tools &amp; BOM</a>, or jump to a garment —
-		<a href="{base}/pants">pants</a>, <a href="{base}/shirts">shirts</a>, <a href="{base}/vests">vests</a>,
-		<a href="{base}/coats">coats</a>.
+		Back to the full <a href={resolve('/tools')}>Tools &amp; BOM</a>, or jump to a garment —
+		<a href={resolve('/pants')}>pants</a>, <a href={resolve('/shirts')}>shirts</a>,
+		<a href={resolve('/vests')}>vests</a>,
+		<a href={resolve('/coats')}>coats</a>.
 	</p>
 </main>

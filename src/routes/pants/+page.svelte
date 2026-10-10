@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import WaistTakeInDistributor from '$lib/components/calc/WaistTakeInDistributor.svelte';
-	import TaperCalculator from '$lib/components/calc/TaperCalculator.svelte';
-	import HemCuffMarker from '$lib/components/calc/HemCuffMarker.svelte';
-	import SeamReserveCheck from '$lib/components/calc/SeamReserveCheck.svelte';
+	import { resolve } from '$app/paths';
+	import WaistTakeInDistributor from '#lib/components/calc/WaistTakeInDistributor.svelte';
+	import TaperCalculator from '#lib/components/calc/TaperCalculator.svelte';
+	import HemCuffMarker from '#lib/components/calc/HemCuffMarker.svelte';
+	import SeamReserveCheck from '#lib/components/calc/SeamReserveCheck.svelte';
 </script>
 
 <svelte:head>
@@ -27,16 +27,16 @@
 	<p>
 		On the 6600C: a Universal <code>90/14</code> for medium wool, stitch length ~2.5–3.0&nbsp;mm. Swap to a Jeans/Denim
 		or Topstitch needle for the stacked waistband and seat intersections — needle size, not just patience, is what stops
-		you snapping a fine needle through four to six layers. (The <a href="{base}/machine">restored treadle</a> does these straight
-		seams beautifully too; it just can't machine-finish the raw edges.)
+		you snapping a fine needle through four to six layers. (The <a href={resolve('/machine')}>restored treadle</a> does these
+		straight seams beautifully too; it just can't machine-finish the raw edges.)
 	</p>
 
 	<h2 id="tools">Assemble the tools</h2>
 	<p>
 		Bent shears, a seam ripper, tailor's chalk, fine pins, a tape measure and seam gauge — and the
-		<a href="{base}/tools">pressing kit</a>: a ham for the curved seat and crotch seams, a clapper for the leg crease,
-		and a press cloth (essential on cheap poly/poly-wool dress fabric, which scorches and goes shiny under a bare iron).
-		Pressing gear is the priority purchase here.
+		<a href={resolve('/tools')}>pressing kit</a>: a ham for the curved seat and crotch seams, a clapper for the leg
+		crease, and a press cloth (essential on cheap poly/poly-wool dress fabric, which scorches and goes shiny under a
+		bare iron). Pressing gear is the priority purchase here.
 	</p>
 
 	<h2 id="steps">The stepwise guide</h2>
@@ -103,7 +103,7 @@
 
 	<hr />
 	<p class="text-sm">
-		More guides: <a href="{base}/shirts">shirts</a>, <a href="{base}/vests">vests</a>,
-		<a href="{base}/coats">coats</a> · the <a href="{base}/fitting">fitting theory</a>.
+		More guides: <a href={resolve('/shirts')}>shirts</a>, <a href={resolve('/vests')}>vests</a>,
+		<a href={resolve('/coats')}>coats</a> · the <a href={resolve('/fitting')}>fitting theory</a>.
 	</p>
 </main>

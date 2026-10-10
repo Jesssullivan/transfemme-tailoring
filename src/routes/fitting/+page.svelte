@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import WaistTakeInDistributor from '$lib/components/calc/WaistTakeInDistributor.svelte';
-	import DartBuilder from '$lib/components/calc/DartBuilder.svelte';
-	import TaperCalculator from '$lib/components/calc/TaperCalculator.svelte';
-	import HemCuffMarker from '$lib/components/calc/HemCuffMarker.svelte';
-	import SeamReserveCheck from '$lib/components/calc/SeamReserveCheck.svelte';
-	import SeamOffsetDiagram from '$lib/components/diagrams/SeamOffsetDiagram.svelte';
-	import DartDiagram from '$lib/components/diagrams/DartDiagram.svelte';
-	import TaperDiagram from '$lib/components/diagrams/TaperDiagram.svelte';
-	import HemDiagram from '$lib/components/diagrams/HemDiagram.svelte';
+	import { resolve } from '$app/paths';
+	import WaistTakeInDistributor from '#lib/components/calc/WaistTakeInDistributor.svelte';
+	import DartBuilder from '#lib/components/calc/DartBuilder.svelte';
+	import TaperCalculator from '#lib/components/calc/TaperCalculator.svelte';
+	import HemCuffMarker from '#lib/components/calc/HemCuffMarker.svelte';
+	import SeamReserveCheck from '#lib/components/calc/SeamReserveCheck.svelte';
+	import SeamOffsetDiagram from '#lib/components/diagrams/SeamOffsetDiagram.svelte';
+	import DartDiagram from '#lib/components/diagrams/DartDiagram.svelte';
+	import TaperDiagram from '#lib/components/diagrams/TaperDiagram.svelte';
+	import HemDiagram from '#lib/components/diagrams/HemDiagram.svelte';
 </script>
 
 <svelte:head>
@@ -25,7 +25,7 @@
 	<p>
 		Everything else on the site is a recipe; this page is the <em>why</em>. It's also where the five calculators live in
 		full — the garment guides just embed the ones they need. Enter your numbers once on
-		<a href="{base}/measurements">your measurements</a> and they pre-fill here.
+		<a href={resolve('/measurements')}>your measurements</a> and they pre-fill here.
 	</p>
 
 	<h2 id="feminine-fit">What makes a fit read feminine</h2>
@@ -152,8 +152,8 @@
 
 	<h2 id="measurements">Measurements to take</h2>
 	<p>
-		Enter these once on <a href="{base}/measurements">your measurements</a> (saved privately in your browser) and the
-		calculators pre-fill. <strong>On the body</strong> (over the shapewear/forms you'll actually wear):
+		Enter these once on <a href={resolve('/measurements')}>your measurements</a> (saved privately in your browser) and
+		the calculators pre-fill. <strong>On the body</strong> (over the shapewear/forms you'll actually wear):
 	</p>
 	<ul>
 		<li>Shoulder point-to-point, and across-back width (blade to blade) for lat fullness.</li>
@@ -219,8 +219,8 @@
 
 	<hr />
 	<p class="text-sm">
-		Put it to work: <a href="{base}/pants">pants</a>, <a href="{base}/shirts">shirts</a>,
-		<a href="{base}/vests">vests</a>, <a href="{base}/coats">coats</a>. Sources are gathered in the
+		Put it to work: <a href={resolve('/pants')}>pants</a>, <a href={resolve('/shirts')}>shirts</a>,
+		<a href={resolve('/vests')}>vests</a>, <a href={resolve('/coats')}>coats</a>. Sources are gathered in the
 		<a href="https://github.com/jesssullivan/transfemme-tailoring#sources">README</a>.
 	</p>
 </main>

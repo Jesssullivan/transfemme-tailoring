@@ -4,9 +4,9 @@
 	// darts, converted to exact offsets to mark. A SEAM removes 2× its marked
 	// offset (it eats both panels meeting there); a DART removes its full
 	// pinched width. Back-loaded by default. Feeds the Dart builder.
-	import { round1, fmt } from '$lib/calc/format';
-	import { measurements } from '$lib/calc/measurements.svelte';
-	import Glyph from '$lib/components/Glyph.svelte';
+	import { round1, fmt } from '#lib/calc/format.js';
+	import { measurements } from '#lib/calc/measurements.svelte.js';
+	import Glyph from '#lib/components/Glyph.svelte';
 
 	let garmentWaistFlat = $state(52); // measured flat (single layer), buttoned
 	let bodyWaist = $state(82); // true natural waist over the shapewear/forms worn

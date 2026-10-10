@@ -1,57 +1,57 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import Glyph from '$lib/components/Glyph.svelte';
-	import DartDiagram from '$lib/components/diagrams/DartDiagram.svelte';
+	import { resolve } from '$app/paths';
+	import Glyph from '#lib/components/Glyph.svelte';
+	import DartDiagram from '#lib/components/diagrams/DartDiagram.svelte';
 
 	const routes = [
 		{
-			href: `${base}/machine`,
+			href: resolve('/machine'),
 			icon: 'cog',
 			title: 'Machine setup & restoration',
 			blurb:
 				'The 6600C workhorse for wool and shirting; the corrected tension rule; and the 1800s treadle restoration log.',
 		},
 		{
-			href: `${base}/tools`,
+			href: resolve('/tools'),
 			icon: 'wrench',
 			title: 'Tools & BOM',
 			blurb:
 				'What I own (and the two mismatches to work around), what to buy, and why a real iron is the priority purchase.',
 		},
 		{
-			href: `${base}/wants`,
+			href: resolve('/wants'),
 			icon: 'thumb-tack',
 			title: 'Wants',
 			blurb:
 				'The distilled wish list: pressing kit first, then edge-finishing and consumables — and what not to double-buy.',
 		},
 		{
-			href: `${base}/fitting`,
+			href: resolve('/fitting'),
 			icon: 'calculator',
 			title: 'Fitting theory & calculators',
 			blurb:
 				'Why a feminine fit differs, how an athletic build changes the advice, and five interactive alteration calculators.',
 		},
 		{
-			href: `${base}/pants`,
+			href: resolve('/pants'),
 			icon: 'scissors',
 			title: 'Dress pants',
 			blurb: 'Suppress the waist, taper from the knee down only, re-hem to a flattering break.',
 		},
 		{
-			href: `${base}/shirts`,
+			href: resolve('/shirts'),
 			icon: 'scissors',
 			title: 'Dress shirts',
 			blurb: 'Two back darts + curved sides for an X-line; a one-pass sleeve; keep chest and reach room.',
 		},
 		{
-			href: `${base}/vests`,
+			href: resolve('/vests'),
 			icon: 'scissors',
 			title: 'Vests / waistcoats',
 			blurb: 'The best first structured project: a concave hourglass curve and a front contour dart.',
 		},
 		{
-			href: `${base}/coats`,
+			href: resolve('/coats'),
 			icon: 'scissors',
 			title: 'Suit coats',
 			blurb: 'The hard one. A real DIY scope, done in order — and an honest line for what wants a pro.',
@@ -88,11 +88,11 @@
 				<div class="not-prose mt-6 flex flex-wrap gap-3">
 					<a
 						class="btn preset-filled-primary-500 inline-flex min-h-11 items-center gap-2"
-						href="{base}/fitting#calculators"
+						href={resolve('/fitting#calculators')}
 					>
 						<Glyph name="calculator" />Open the calculators
 					</a>
-					<a class="btn preset-outlined-surface-500 inline-flex min-h-11 items-center gap-2" href="{base}/machine">
+					<a class="btn preset-outlined-surface-500 inline-flex min-h-11 items-center gap-2" href={resolve('/machine')}>
 						<Glyph name="cog" />Start at the machine
 					</a>
 				</div>
@@ -119,7 +119,7 @@
 			<strong>1800s treadle Singer</strong>
 			in the corner is a restoration project — not yet a working machine — that will someday lay down the prettiest straight
 			construction seam in the house. The guides assume the 6600C; the treadle gets its own
-			<a href="{base}/machine#treadle">restoration log</a>.
+			<a href={resolve('/machine#treadle')}>restoration log</a>.
 		</p>
 
 		<h2>The thesis</h2>
@@ -154,7 +154,7 @@
 			Every garment guide follows the same shape: <strong
 				>set up the machine → assemble the tools → the stepwise guide</strong
 			>, with the calculators from
-			<a class="underline" href="{base}/fitting">Fitting</a> embedded where you need them.
+			<a class="underline" href={resolve('/fitting')}>Fitting</a> embedded where you need them.
 		</p>
 	</section>
 

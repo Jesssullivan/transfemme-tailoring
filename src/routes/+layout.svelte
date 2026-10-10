@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
-	import { base } from '$app/paths';
+	import { browser } from '$app/env';
+	import { resolve } from '$app/paths';
 	import { Menu, X } from '@lucide/svelte';
-	import SaturnMark from '$lib/components/SaturnMark.svelte';
+	import SaturnMark from '#lib/components/SaturnMark.svelte';
 	import { AppBar, Dialog, Navigation } from '@skeletonlabs/skeleton-svelte';
 	import { TinyVectors } from '@tummycrypt/tinyvectors';
 	import '../app.css';
-	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
-	import MeasurementsDrawer from '$lib/components/MeasurementsDrawer.svelte';
-	import { theme } from '$lib/theme.svelte';
-	import { measurements } from '$lib/calc/measurements.svelte';
+	import ThemeSwitcher from '#lib/components/ThemeSwitcher.svelte';
+	import MeasurementsDrawer from '#lib/components/MeasurementsDrawer.svelte';
+	import { theme } from '#lib/theme.svelte.js';
+	import { measurements } from '#lib/calc/measurements.svelte.js';
 
 	let { children } = $props();
 
@@ -32,17 +32,18 @@
 	});
 
 	// Multi-page static site under a GitHub Pages project path: every internal
-	// link is prefixed with `base` ('' locally, '/transfemme-tailoring' deployed).
+	// link goes through `resolve()` from $app/paths, which applies the base path
+	// ('' locally, '/transfemme-tailoring' deployed). SvelteKit 3 removed `base`.
 	const navLinks: { href: string; label: string }[] = [
-		{ href: `${base}/machine`, label: 'Machine' },
-		{ href: `${base}/tools`, label: 'Tools' },
-		{ href: `${base}/wants`, label: 'Wants' },
-		{ href: `${base}/fitting`, label: 'Fitting' },
-		{ href: `${base}/measurements`, label: 'Measurements' },
-		{ href: `${base}/pants`, label: 'Pants' },
-		{ href: `${base}/shirts`, label: 'Shirts' },
-		{ href: `${base}/vests`, label: 'Vests' },
-		{ href: `${base}/coats`, label: 'Coats' },
+		{ href: resolve('/machine'), label: 'Machine' },
+		{ href: resolve('/tools'), label: 'Tools' },
+		{ href: resolve('/wants'), label: 'Wants' },
+		{ href: resolve('/fitting'), label: 'Fitting' },
+		{ href: resolve('/measurements'), label: 'Measurements' },
+		{ href: resolve('/pants'), label: 'Pants' },
+		{ href: resolve('/shirts'), label: 'Shirts' },
+		{ href: resolve('/vests'), label: 'Vests' },
+		{ href: resolve('/coats'), label: 'Coats' },
 	];
 
 	const SITE_NAME = 'Transfemme Tailoring';
@@ -115,7 +116,7 @@
 		<AppBar.Toolbar class="grid-cols-[auto_1fr_auto] px-4 py-2">
 			<AppBar.Lead>
 				<a
-					href="{base}/"
+					href={resolve('/')}
 					class="hover:text-primary-500 inline-flex min-w-0 items-center gap-2 font-mono text-base font-bold tracking-tight whitespace-nowrap transition-colors sm:text-lg"
 					aria-label={SITE_NAME + ' home'}
 				>
@@ -159,7 +160,7 @@
 							<Navigation layout="sidebar">
 								<Navigation.Content>
 									<Navigation.Menu>
-										<Navigation.TriggerAnchor href="{base}/" onclick={() => (mobileOpen = false)}>
+										<Navigation.TriggerAnchor href={resolve('/')} onclick={() => (mobileOpen = false)}>
 											<Navigation.TriggerText>Overview</Navigation.TriggerText>
 										</Navigation.TriggerAnchor>
 										{#each navLinks as { href, label } (href)}
@@ -193,7 +194,7 @@
 				before you ever cut; verify against the linked sources.
 			</p>
 			<nav class="flex flex-wrap gap-4" aria-label="Footer">
-				<a href="{base}/agent" class="hover:text-primary-500 transition-colors">Agent AX</a>
+				<a href={resolve('/agent')} class="hover:text-primary-500 transition-colors">Agent AX</a>
 				<a href={REPO_URL} target="_blank" rel="noopener" class="hover:text-primary-500 transition-colors">GitHub</a>
 				<a href={SECURITY_URL} target="_blank" rel="noopener" class="hover:text-primary-500 transition-colors"
 					>Security</a

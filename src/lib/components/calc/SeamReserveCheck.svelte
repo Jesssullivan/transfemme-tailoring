@@ -4,9 +4,9 @@
 	// line, and how much let-out reserve you keep. Default to fold-and-baste
 	// (reversible) until the body fitting confirms — cutting wool is irreversible
 	// and an over-take-in shows old needle holes and press-shine if let back out.
-	import { round1, fmt } from '$lib/calc/format';
-	import { measurements } from '$lib/calc/measurements.svelte';
-	import Glyph from '$lib/components/Glyph.svelte';
+	import { round1, fmt } from '#lib/calc/format.js';
+	import { measurements } from '#lib/calc/measurements.svelte.js';
+	import Glyph from '#lib/components/Glyph.svelte';
 
 	let offset = $state(2); // inset being removed at this seam (from Distributor / Taper)
 	let originalSA = $state(1.5); // seam allowance already in the garment here

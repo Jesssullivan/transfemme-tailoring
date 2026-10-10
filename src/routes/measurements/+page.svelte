@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { measurements, BODY_FIELDS } from '$lib/calc/measurements.svelte';
-	import Glyph from '$lib/components/Glyph.svelte';
+	import { resolve } from '$app/paths';
+	import { measurements, BODY_FIELDS } from '#lib/calc/measurements.svelte.js';
+	import Glyph from '#lib/components/Glyph.svelte';
 
 	const GROUPS = [
 		{ id: 'torso', label: 'Torso' },
@@ -51,7 +51,7 @@
 		Enter your measurements once — every calculator on the site reads them, and they're saved in
 		<strong>this browser only</strong> (nothing is uploaded). Numbers are in your chosen unit; toggling converts them.
 		Not sure what to measure? See the
-		<a href="{base}/fitting#measurements">measurement guide</a>.
+		<a href={resolve('/fitting#measurements')}>measurement guide</a>.
 	</p>
 
 	<p class="not-prose text-surface-500 flex items-center gap-1.5 text-xs">
@@ -111,8 +111,8 @@
 
 	<hr />
 	<p class="text-sm">
-		Now put them to work: <a href="{base}/fitting">fitting &amp; calculators</a>,
-		<a href="{base}/pants">pants</a>, <a href="{base}/shirts">shirts</a>,
-		<a href="{base}/vests">vests</a>, <a href="{base}/coats">coats</a>.
+		Now put them to work: <a href={resolve('/fitting')}>fitting &amp; calculators</a>,
+		<a href={resolve('/pants')}>pants</a>, <a href={resolve('/shirts')}>shirts</a>,
+		<a href={resolve('/vests')}>vests</a>, <a href={resolve('/coats')}>coats</a>.
 	</p>
 </main>

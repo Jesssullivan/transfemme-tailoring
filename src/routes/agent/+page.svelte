@@ -1,5 +1,6 @@
 <script lang="ts">
-	let { data } = $props();
+	import { asset } from '$app/paths';
+	import { getSkills } from './skills.remote';
 
 	const entrypoints = [
 		{
@@ -34,17 +35,19 @@
 		},
 		{
 			label: 'llms.txt',
-			href: '/llms.txt',
+			// static/ files go through asset() so the GitHub Pages base path applies.
+			href: asset('llms.txt'),
 			text: 'Public LLM index for the deployed scaffold site.',
 		},
 		{
 			label: 'agent-map.md',
-			href: '/agent-map.md',
+			href: asset('agent-map.md'),
 			text: 'Compact machine route map.',
 		},
 	];
 
-	const skills = $derived(data.skills);
+	// RU3: build-time `prerender` remote function (Svelte async mode).
+	const skills = await getSkills();
 
 	const recipes = [
 		'just setup',
@@ -122,7 +125,7 @@
 		<p class="text-surface-700-300 mb-5 max-w-3xl text-sm leading-relaxed">
 			Six skills bundled as the <code>scaffold-core</code> plugin. Rendered from
 			<code>.agents/skills/*/SKILL.md</code> at build time — single source of truth. Install with
-			<code>/plugin marketplace add github:jesssullivan/transfemme-tailoring</code>.
+			<code class="break-all">/plugin marketplace add github:jesssullivan/transfemme-tailoring</code>.
 		</p>
 		<div class="grid gap-3 lg:grid-cols-2">
 			{#each skills as skill (skill.name)}

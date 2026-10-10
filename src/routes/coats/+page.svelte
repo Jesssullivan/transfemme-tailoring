@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import WaistTakeInDistributor from '$lib/components/calc/WaistTakeInDistributor.svelte';
-	import DartBuilder from '$lib/components/calc/DartBuilder.svelte';
-	import TaperCalculator from '$lib/components/calc/TaperCalculator.svelte';
-	import HemCuffMarker from '$lib/components/calc/HemCuffMarker.svelte';
-	import SeamReserveCheck from '$lib/components/calc/SeamReserveCheck.svelte';
+	import { resolve } from '$app/paths';
+	import WaistTakeInDistributor from '#lib/components/calc/WaistTakeInDistributor.svelte';
+	import DartBuilder from '#lib/components/calc/DartBuilder.svelte';
+	import TaperCalculator from '#lib/components/calc/TaperCalculator.svelte';
+	import HemCuffMarker from '#lib/components/calc/HemCuffMarker.svelte';
+	import SeamReserveCheck from '#lib/components/calc/SeamReserveCheck.svelte';
 </script>
 
 <svelte:head>
@@ -39,16 +39,16 @@
 
 	<h2 id="machine">Set up the machine</h2>
 	<p>
-		The 6600C (or the <a href="{base}/machine">treadle</a>) handles the straight and gently-curved seams: center-back,
-		side-back, side, and the under-sleeve taper. The pads, collar, lining, sleeve-cap easing and any buttonholes are
-		hand work. Test heat on a hidden spot first — cheap
+		The 6600C (or the <a href={resolve('/machine')}>treadle</a>) handles the straight and gently-curved seams:
+		center-back, side-back, side, and the under-sleeve taper. The pads, collar, lining, sleeve-cap easing and any
+		buttonholes are hand work. Test heat on a hidden spot first — cheap
 		<strong>fused</strong> jackets bubble and delaminate under too much heat.
 	</p>
 
 	<h2 id="tools">Assemble the tools</h2>
 	<p>
-		The full <a href="{base}/tools">pressing kit</a> is non-negotiable here: ham, clapper, sleeve roll, press cloth. Plus
-		shears, seam rippers, fine and heavy needles, and twill/stay tape to hold the new waist and shoulder seams.
+		The full <a href={resolve('/tools')}>pressing kit</a> is non-negotiable here: ham, clapper, sleeve roll, press cloth.
+		Plus shears, seam rippers, fine and heavy needles, and twill/stay tape to hold the new waist and shoulder seams.
 	</p>
 
 	<h2 id="steps">The stepwise guide — order matters</h2>
@@ -110,7 +110,7 @@
 
 	<hr />
 	<p class="text-sm">
-		More guides: <a href="{base}/pants">pants</a>, <a href="{base}/shirts">shirts</a>,
-		<a href="{base}/vests">vests</a> · the <a href="{base}/fitting">fitting theory</a>.
+		More guides: <a href={resolve('/pants')}>pants</a>, <a href={resolve('/shirts')}>shirts</a>,
+		<a href={resolve('/vests')}>vests</a> · the <a href={resolve('/fitting')}>fitting theory</a>.
 	</p>
 </main>

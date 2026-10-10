@@ -61,3 +61,6 @@ tofu/tfplan
 .aider*
 # Local dev artifacts
 .huskycat/
+
+# svelte-check --tsgo writes transpiled components here outside Bazel
+.svelte-check/

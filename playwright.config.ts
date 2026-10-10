@@ -41,7 +41,8 @@ export default defineConfig({
 			: []),
 	],
 	webServer: {
-		command: 'pnpm run build && pnpm exec serve build -l ' + port,
+		// `just build` builds //:build through Bazel and materializes build/.
+		command: 'just build && pnpm exec serve build -l ' + port,
 		port,
 		timeout: 180_000,
 		reuseExistingServer: !process.env.CI,
